@@ -56,15 +56,10 @@ include("../auth/checkAuth.php");
       <div class="management-head">
         <p>Movies</p>
 
-        <div class="button add" onclick="openModel()"><i class="fa-solid fa-plus"></i>
+        <div class="button add" onclick="openModel('admin_add_movie.php')"><i class="fa-solid fa-plus"></i>
           <p>Add Movie</p>
         </div>
-        <div class="modal" id="model">
-          <div class="modal-content">
-            <span class="close"><i class="fa-solid fa-xmark" onclick="closeModel()"></i></span>
-            <iframe src="admin_add_movie.php" frameborder="0" height="100%" width="100%"></iframe>
-          </div>
-        </div>
+
       </div>
       <div class="management-content">
         <table class="admin-content-table">
@@ -84,7 +79,10 @@ include("../auth/checkAuth.php");
                 <td><?= $row["title"] ?></td>
                 <td><?= $row["genre"] ?></td>
                 <td><?= $row["duration"] ?> mins</td>
-                <td class="action"><i class="fa-solid fa-pen-to-square action-edit"></i><i class="fa-solid fa-trash action-delete"></i></td>
+                <td class="action">
+                  <i class="fa-solid fa-pen-to-square action-edit" onclick="openModel('admin_edit_movie.php?id=<?=$row["movie_id"] ?>')"></i>
+                  <i class="fa-solid fa-trash action-delete"></i>
+                </td>
               </tr>
           <?php
             }
@@ -96,14 +94,27 @@ include("../auth/checkAuth.php");
   </div>
 
   <?php include("../includes/footer.php"); ?>
+
+  <div class="model" id="model">
+    <div class="model-content">
+      <span class="close"><i class="fa-solid fa-xmark" onclick="closeModel()"></i></span>
+      <iframe src="" frameborder="0" height="100%" width="100%" id="model-frame"></iframe>
+    </div>
+  </div>
 </body>
 <script>
-  function openModel() {
-    document.getElementById("model").style.display = "flex"
+  function openModel(url) {
+    const model = document.getElementById("model");
+    const frame = document.getElementById("model-frame");
+    frame.src = url;
+    model.style.display = "flex"
   }
 
   function closeModel() {
-    document.getElementById("model").style.display = "none"
+    const model = document.getElementById("model");
+    const frame = document.getElementById("model-frame");
+    model.style.display = "none"
+    frame.src = "";
   }
   document.addEventListener("DOMContentLoaded", function() {
     const model = document.getElementById("model");
