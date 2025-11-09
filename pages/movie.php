@@ -16,7 +16,7 @@ include("../includes/connection.php");
 </head>
 
 <body>
-   <?php include("../includes/header.php");?>
+    <?php include("../includes/header.php"); ?>
     <?php
     $id = $_GET['id'];
     $result = mysqli_query($db_server, "Select * from movies where movie_id=$id");
@@ -53,7 +53,7 @@ include("../includes/connection.php");
                         </span>
                         <span>
                             <i class="fa-solid fa-calendar-days"></i>
-                            <?= $movie["release_date"] ?> mins
+                            <?= $movie["release_date"] ?>
                         </span>
 
                     </div>
@@ -61,21 +61,34 @@ include("../includes/connection.php");
                         <?= $movie["description"] ?>
                     </div>
                 </div>
+                <?php
+
+                $showtimes = mysqli_query($db_server, "SELECT * FROM showtime WHERE movie_id = $id ORDER BY show_date, show_time");
+                $showtime_data = [];
+                while ($row = mysqli_fetch_assoc($showtimes)) {
+                    $showtime_data[] = $row;
+                }
+
+                ?>
                 <div class="inner-details-block">
                     <p class="inner-details-sub-title">Select Date</p>
                     <div class="showdate-container">
-                        <div class="showdate-card">
-                            <p class="showdate month">Nov</p>
-                            <p class="showdate date">4</p>
-                        </div>
+                        <?php foreach ($showtime_data as $showtime_row) { ?>
+                            <div class="showdate-card">
+                                <p class="showdate month"><?= date("M", strtotime($showtime_row["show_date"])) ?></p>
+                                <p class="showdate date"><?= date("d", strtotime($showtime_row["show_date"])) ?></p>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="inner-details-block">
                     <p class="inner-details-sub-title">Select Time</p>
                     <div class="showtime-container">
-                        <div class="showtime-card">
-                            <p class="showtime">9:00 AM</p>
-                        </div>
+                        <?php foreach ($showtime_data as $showtime_row) { ?>
+                            <div class="showtime-card">
+                                <p class="showtime"><?= date("h:i A", strtotime($showtime_row["show_time"])) ?></p>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="inner-details-block">
@@ -96,93 +109,18 @@ include("../includes/connection.php");
                             <span>H</span>
                         </div>
                         <div class="seat-map">
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
-                            <div class="seat"></div>
+                            <?php for ($i = 0; $i < 80; $i++) { ?>
+                                <div class="seat"></div>
+
+                            <?php } ?>
+
                         </div>
                     </div>
                 </div>
             </article>
         </section>
     </main>
-    <?php include("../includes/footer.php");?>
+    <?php include("../includes/footer.php"); ?>
 </body>
 
 </html>
