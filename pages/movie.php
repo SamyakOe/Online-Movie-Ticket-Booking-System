@@ -16,12 +16,29 @@ include("../includes/connection.php");
 </head>
 
 <body>
-    <?php include("../includes/header.php"); ?>
     <?php
     $id = $_GET['id'];
+
+    if (isset($_GET['ajax']) && $_GET['ajax'] == 1) {
+        $selected_showDate = $_GET["show_date"];
+        $showtime = mysqli_query($db_server, "SELECT * FROM showtime WHERE movie_id='$id' AND show_date='$selected_showDate'");
+        $showtime_data = [];
+        while ($row = mysqli_fetch_assoc($showtime)) {
+            $showtime_data[] = $row;
+        }
+
+        foreach ($showtime_data as $showtime_row) { ?>
+            <div class="showtime-card" onclick="selectShowTime(this)">
+                <p class="showtime"><?= date("h:i A", strtotime($showtime_row["show_time"])) ?></p>
+            </div>
+    <?php }
+        exit;
+    }
+
     $result = mysqli_query($db_server, "Select * from movies where movie_id=$id");
     $movie = mysqli_fetch_assoc($result);
-    ?>
+    include("../includes/header.php"); ?>
+
     <main class="app">
         <section class="body-container">
             <article class="inner-poster">
@@ -63,20 +80,21 @@ include("../includes/connection.php");
                 </div>
                 <?php
 
-                $showtimes = mysqli_query($db_server, "SELECT * FROM showtime WHERE movie_id = $id ORDER BY show_date, show_time");
-                $showtime_data = [];
-                while ($row = mysqli_fetch_assoc($showtimes)) {
-                    $showtime_data[] = $row;
+                $showdate = mysqli_query($db_server, "SELECT * FROM showtime WHERE movie_id = $id GROUP BY show_date ORDER BY show_date");
+                $showdate_data = [];
+                while ($row = mysqli_fetch_assoc($showdate)) {
+                    $showdate_data[] = $row;
                 }
+
 
                 ?>
                 <div class="inner-details-block">
                     <p class="inner-details-sub-title">Select Date</p>
                     <div class="showdate-container">
-                        <?php foreach ($showtime_data as $showtime_row) { ?>
-                            <div class="showdate-card">
-                                <p class="showdate month"><?= date("M", strtotime($showtime_row["show_date"])) ?></p>
-                                <p class="showdate date"><?= date("d", strtotime($showtime_row["show_date"])) ?></p>
+                        <?php foreach ($showdate_data as $showdate_row) { ?>
+                            <div class="showdate-card" onclick="showShowTime(this,'<?= $showdate_row["show_date"] ?>')">
+                                <p class="showdate month"><?= date("M", strtotime($showdate_row["show_date"])) ?></p>
+                                <p class="showdate date"><?= date("d", strtotime($showdate_row["show_date"])) ?></p>
                             </div>
                         <?php } ?>
                     </div>
@@ -84,11 +102,8 @@ include("../includes/connection.php");
                 <div class="inner-details-block">
                     <p class="inner-details-sub-title">Select Time</p>
                     <div class="showtime-container">
-                        <?php foreach ($showtime_data as $showtime_row) { ?>
-                            <div class="showtime-card">
-                                <p class="showtime"><?= date("h:i A", strtotime($showtime_row["show_time"])) ?></p>
-                            </div>
-                        <?php } ?>
+
+
                     </div>
                 </div>
                 <div class="inner-details-block">
@@ -122,5 +137,28 @@ include("../includes/connection.php");
     </main>
     <?php include("../includes/footer.php"); ?>
 </body>
+<script>
+    function showShowTime(card, showDate) {
+        selectedCard(card);
+        let xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "movie.php?id=" + <?= $id ?> + "&show_date=" + showDate + "&ajax=1", true);
+        xhttp.onload = function() {
+            document.querySelector('.showtime-container').innerHTML = xhttp.responseText;
+        };
+        xhttp.send();
+    }
+    function selectShowTime(card){
+        document.querySelectorAll('.showtime-card').forEach(c => c.classList.remove('selected-card'));
+    
+        card.classList.add('selected-card');
+
+    }
+
+    function selectedCard(card) {
+        document.querySelectorAll('.showdate-card').forEach(c => c.classList.remove('selected-card'));
+
+        card.classList.add('selected-card');
+    }
+</script>
 
 </html>

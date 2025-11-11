@@ -329,6 +329,7 @@ footer {
 .showdate-container,
 .showtime-container {
   display: flex;
+  gap: 2rem;
 }
 .showdate-card,
 .showtime-card {
@@ -336,6 +337,13 @@ footer {
   background-color: var(--color4);
   padding: 1.5rem 1.8rem;
   text-align: center;
+}
+.showdate-card:hover,
+.showtime-card:hover {
+  background-color: var(--color1);
+}
+.selected-card {
+  background-color: var(--color3);
 }
 .showdate {
   color: white;
@@ -399,7 +407,7 @@ footer {
   width: 2.5rem;
   height: 2.5rem;
 }
-.seat:hover{
+.seat:hover {
   background-color: #d9d9d9;
 }
 .indicator {
@@ -525,7 +533,7 @@ iframe {
   color: white;
   font-size: 1rem;
 }
-.form textarea{
+.form textarea {
   height: fit-content;
   resize: vertical;
 }
@@ -537,6 +545,10 @@ iframe {
   font-size: 1.25rem;
   padding: 0.25rem 0rem;
   margin-top: 0.5rem;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 .genre-selection {
   display: grid;
@@ -547,6 +559,18 @@ iframe {
   display: inline;
   font-size: 1rem;
   width: 100%;
+}
+.form .dates {
+  border: 0.1rem solid var(--color1);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 0.5rem 0rem;
+}
+.form .dates input[type="time"] {
+  margin: 0.5rem 0rem;
+}
+.addShowtime {
+  font-size: 1rem;
 }
 .admin-content-table {
   border: none;
@@ -575,7 +599,8 @@ iframe {
   gap: 1rem;
   justify-content: flex-end;
 }
-.action-delete, .action-edit{
+.action-delete,
+.action-edit {
   cursor: pointer;
 }
 .action-edit {

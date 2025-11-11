@@ -7,7 +7,13 @@ $movie_id = $_GET['id'];
 $result = mysqli_query($db_server, "Select * from movies where movie_id='$movie_id'");
 $movie = mysqli_fetch_assoc($result);
 
-$showtimes = mysqli_query($db_server, "SELECT * FROM showtime WHERE movie_id='$movie_id'");
+$showtimes = mysqli_query($db_server, "
+  SELECT showtime_id, show_date, show_time 
+  FROM showtime 
+  WHERE movie_id='$movie_id' 
+  ORDER BY show_date, show_time
+");
+
 
 if (isset($_POST['edit_movie'])) {
     $title = mysqli_real_escape_string($db_server, $_POST['title']);
@@ -39,15 +45,35 @@ if (isset($_POST['edit_movie'])) {
                 description='$description'
                 where movie_id='$movie_id'";
 
-    foreach ($_POST['showtime_id'] as $i => $id) {
-        $date = $_POST['show_date'][$i];
-        $time = $_POST['show_time'][$i];
-        mysqli_query($db_server, "UPDATE showtime SET show_date='$date', show_time='$time' WHERE showtime_id='$id'");
+
+    foreach ($_POST['show_date'] as $id => $date) {
+        $time = $_POST['show_time'][$id];
+        $stmt = $db_server->prepare("UPDATE showtime SET show_date=?, show_time=? WHERE showtime_id=?");
+        $stmt->bind_param("ssi", $date, $time, $id);
+        $stmt->execute();
     }
 
 
+
+    if (!empty($_POST['new_show_date'])) {
+        foreach ($_POST['new_show_date'] as $i => $date) {
+            if (!empty($_POST['new_show_time'][$i])) {
+                foreach ($_POST['new_show_time'][$i] as $time) {
+                    mysqli_query(
+                        $db_server,
+                        "INSERT INTO showtime (movie_id, show_date, show_time) 
+                     VALUES ('$movie_id', '$date', '$time')"
+                    );
+                }
+            }
+        }
+    }
+
+
+
+
     if (mysqli_query($db_server, $movie_query)) {
-        echo "<script>alert('Movie editted successfully!');</script>";
+        echo "<script>alert('Movie edited successfully!');</script>";
     } else {
         echo "Error: " . mysqli_error($db_server);
     }
@@ -56,6 +82,9 @@ if (isset($_POST['edit_movie'])) {
 
 <head>
     <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 </head>
 
 <form method="POST" enctype="multipart/form-data" class="form">
@@ -109,19 +138,26 @@ if (isset($_POST['edit_movie'])) {
     <label for="release_date">Released Date:</label>
     <input type="date" name="release_date" value="<?= $movie["release_date"] ?>" required>
 
+    <label>
+        Showtimes
+        <button type="button" class="button add addShowtime" onclick="addShowDate()"><i class="fa-solid fa-plus"></i> Add Date</button>
 
-    <?php while ($row = mysqli_fetch_assoc($showtimes)) { ?>
-        <input type="hidden" name="showtime_id" value="<?php echo $row['showtime_id']; ?>">
+    </label>
+    <div id="showdateContainer">
+        <?php while ($row = mysqli_fetch_assoc($showtimes)) { ?>
+            <div class="dates">
+                <label>Show Date:</label>
+                <input type="date" name="show_date[<?= $row['showtime_id']; ?>]" value="<?= $row['show_date']; ?>" required>
 
-        <label>Show Date:</label>
-        <input type="date" name="show_date" value="<?php echo $row['show_date']; ?>" required>
+                <label>Show Time:</label>
+                <input type="time" name="show_time[<?= $row['showtime_id']; ?>]" value="<?= $row['show_time']; ?>" required>
+            </div>
+        <?php } ?>
 
-        <label>Show Time:</label>
-        <input type="time" name="show_time" value="<?php echo $row['show_time']; ?>" required>
+    </div>
 
 
 
-    <?php } ?>
 
     <label>Current Poster:</label>
     <img src="/moviebooking/assets/image/<?= $movie["poster"] ?>" alt="<?= $movie["title"] ?>" width="25%">
@@ -130,3 +166,27 @@ if (isset($_POST['edit_movie'])) {
 
     <button type="submit" name="edit_movie" class="button add" style="text-align: center;">Edit Movie</button>
 </form>
+<script>
+    let dateIndex = 0;
+
+    function addShowDate() {
+        const container = document.getElementById("showdateContainer");
+        const div = document.createElement("div");
+        div.innerHTML = `
+        <div class="dates">
+            <label>Show Date:</label>
+            <input type="date" name="new_show_date[${dateIndex}]" required>
+            <label>
+                Show Times:
+            </label>
+            <div class="showtimeContainer">
+                <input type="time" name="new_show_time[${dateIndex}][]" required>
+            </div>
+        </div>
+    `;
+        container.appendChild(div);
+        dateIndex++;
+    }
+
+    
+</script>
