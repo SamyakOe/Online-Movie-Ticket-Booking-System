@@ -80,8 +80,10 @@ include("../auth/checkAuth.php");
                 <td><?= $row["genre"] ?></td>
                 <td><?= $row["duration"] ?> mins</td>
                 <td class="action">
-                  <i class="fa-solid fa-pen-to-square action-edit" onclick="openModel('admin_edit_movie.php?id=<?=$row["movie_id"] ?>')"></i>
-                  <i class="fa-solid fa-trash action-delete"></i>
+                  <i class="fa-solid fa-pen-to-square action-edit" onclick="openModel('admin_edit_movie.php?id=<?= $row["movie_id"] ?>')"></i>
+                  <a href="admin_delete_movie.php?id=<?=$row["movie_id"]?>" onclick="return confirm('Are you sure you want to delete this movie?')">
+                    <i class="fa-solid fa-trash action-delete"></i>
+                  </a>
                 </td>
               </tr>
           <?php

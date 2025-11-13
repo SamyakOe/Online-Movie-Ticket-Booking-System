@@ -16,7 +16,7 @@ if (isset($_POST['add_movie'])) {
 
     $poster = $_FILES['poster']['name'];
     $temp = $_FILES['poster']['tmp_name'];
-    move_uploaded_file($temp, "image/" . $poster);
+    move_uploaded_file($temp, "../assets/image/" . $poster);
 
     $query = "INSERT INTO movies (title, genre, language, director, cast, duration, release_date, description, poster)
               VALUES ('$title', '$genres_string','$language', '$director', '$cast', '$duration', '$release_date', '$description', '$poster' )";
@@ -24,7 +24,7 @@ if (isset($_POST['add_movie'])) {
     if (mysqli_query($db_server, $query)) {
         echo "<script>alert('Movie added successfully!');</script>";
     } else {
-        echo "Error: " . mysqli_error($conn);
+        echo "Error: " . mysqli_error($db_server);
     }
 }
 ?>

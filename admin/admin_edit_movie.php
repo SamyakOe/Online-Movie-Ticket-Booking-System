@@ -30,7 +30,7 @@ if (isset($_POST['edit_movie'])) {
 
     if ($poster = $_FILES['poster']['name']) {
         $temp = $_FILES['poster']['tmp_name'];
-        move_uploaded_file($temp, "/moviebooking/assets/image/" . $poster);
+        move_uploaded_file($temp, "../assets/image/" . $poster);
         mysqli_query($db_server, "UPDATE movies set poster='$poster' where movie_id='$movie_id'");
     }
 
@@ -45,14 +45,14 @@ if (isset($_POST['edit_movie'])) {
                 description='$description'
                 where movie_id='$movie_id'";
 
-
-    foreach ($_POST['show_date'] as $id => $date) {
-        $time = $_POST['show_time'][$id];
-        $stmt = $db_server->prepare("UPDATE showtime SET show_date=?, show_time=? WHERE showtime_id=?");
-        $stmt->bind_param("ssi", $date, $time, $id);
-        $stmt->execute();
+    if (!empty($_POST['show_date']) && is_array($_POST['show_date'])) {
+        foreach ($_POST['show_date'] as $id => $date) {
+            $time = $_POST['show_time'][$id];
+            $stmt = $db_server->prepare("UPDATE showtime SET show_date=?, show_time=? WHERE showtime_id=?");
+            $stmt->bind_param("ssi", $date, $time, $id);
+            $stmt->execute();
+        }
     }
-
 
 
     if (!empty($_POST['new_show_date'])) {
@@ -156,11 +156,8 @@ if (isset($_POST['edit_movie'])) {
 
     </div>
 
-
-
-
     <label>Current Poster:</label>
-    <img src="/moviebooking/assets/image/<?= $movie["poster"] ?>" alt="<?= $movie["title"] ?>" width="25%">
+    <img src="../assets/image/<?= $movie["poster"] ?>" alt="<?= $movie["title"] ?>" width="25%">
     <label for="poster">Change Poster:</label>
     <input type="file" name="poster" accept="image/*"><br>
 
@@ -187,6 +184,4 @@ if (isset($_POST['edit_movie'])) {
         container.appendChild(div);
         dateIndex++;
     }
-
-    
 </script>
