@@ -124,13 +124,32 @@ include("../includes/connection.php");
                             <span>H</span>
                         </div>
                         <div class="seat-map">
-                            <?php for ($i = 0; $i < 80; $i++) { ?>
-                                <div class="seat"></div>
-
+                            <?php for ($i = 0; $i < 80; $i++) {
+                                $row = chr(65 + floor($i / 10));
+                                $col = ($i % 10) + 1;
+                                $seatLabel = $row . $col;
+                            ?>
+                                <div class="seat" data-seatlabel="<?= $seatLabel ?>"></div>
                             <?php } ?>
 
                         </div>
                     </div>
+                    <div class="seat-indicator">
+                        <div class="seat-available"></div>
+                        <span>Available</span>
+                        <div class="seat-booked"></div>
+                        <span>Booked</span>
+                        <div class="seat-selected"></div>
+                        <span>Selected</span>
+
+                    </div>
+                </div>
+                <div class="inner-details-block seat-counter">
+                    <p class="inner-details-sub-title"><span>Selected Seats</span> <span>Total Amount</span></p>
+                    <div class="seat-data">
+                        <span class="selected-seats"></span><span class="total-seat-amount"></span>
+                    </div>
+                    <div class="button confirm-booking">Confirm Booking</div>
                 </div>
             </article>
         </section>
@@ -147,9 +166,10 @@ include("../includes/connection.php");
         };
         xhttp.send();
     }
-    function selectShowTime(card){
+
+    function selectShowTime(card) {
         document.querySelectorAll('.showtime-card').forEach(c => c.classList.remove('selected-card'));
-    
+
         card.classList.add('selected-card');
 
     }
@@ -158,6 +178,30 @@ include("../includes/connection.php");
         document.querySelectorAll('.showdate-card').forEach(c => c.classList.remove('selected-card'));
 
         card.classList.add('selected-card');
+    }
+
+
+    document.querySelectorAll(".seat").forEach((seat) => {
+        seat.addEventListener("click", function() {
+            seat.classList.toggle("seat-selected");
+            updateSelectedSeats();
+        });
+    });
+
+    function updateSelectedSeats() {
+        const selectedSeats = document.querySelectorAll(".seat.seat-selected");
+        const price = 200
+        const amount = selectedSeats.length * price;
+        const seatLabels = Array.from(selectedSeats).map(seat => seat.dataset.seatlabel);
+
+        if (selectedSeats.length > 0) {
+            document.querySelector(".seat-counter").style.display = "flex";
+        } else {
+            document.querySelector(".seat-counter").style.display = "none";
+
+        }
+        document.querySelector(".selected-seats").textContent = seatLabels.join(", ");
+        document.querySelector(".total-seat-amount").textContent = "NPR " + amount;
     }
 </script>
 

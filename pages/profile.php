@@ -23,25 +23,37 @@ $user = mysqli_fetch_assoc($result);
 
 <body>
     <?php include("../includes/header.php"); ?>
-    <main class="login-container">
-        <div class="login-box">
-            <p class="head">My Profile</p>
-            <p class="message <?php echo $message_class ?>"><?php echo $message; ?></p>
-            <form action="profile.php" method="post">
-                <div class="input-field">
-                    <i class="fa-solid fa-user"></i>
-                    <input type="text" name="fullname" value="<?= $user["name"] ?>" required />
-                </div>
+    <main class="profile-container">
+        <div class="profile-body">
+            <div class="profile-info">
 
-                <div class="input-field">
-                    <i class="fa-solid fa-mobile"></i>
-                    <input type="number" name="mobile_no" value="<?= $user["mobile_no"] ?>" required />
+                <div class="profile"><i class="fa-solid fa-user"></i></div>
+                <div class="profile-text">
+                    <p class="profile-username"><?= $user["name"] ?></p>
+                    <p class="profile-email"><?= $user["email"] ?></p>
+                    <p class="profile-role"><?= $user["role"] ? "Admin" : "User" ?></p>
                 </div>
-
-                <input type="submit" name="submit" value="Change" class="button" />
-            </form>
-        
+            </div>
         </div>
+        <div class="profile-body">
+            <div class="profile-body-title">Profile Information</div>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+                <tr>
+                    <td><?= $user["name"] ?></td>
+                    <td><?= $user["email"] ?></td>
+                </tr>
+            </table>
+            <hr>
+            <div class="profile-actions">
+                <button class="profile-button"><i class="fa-solid fa-pen-to-square"></i>Edit Profile</button>
+                <button class="profile-button"><i class="fa-solid fa-key"></i>Change Password</button>
+            </div>
+        </div>
+
     </main>
 
     <?php include("../includes/footer.php"); ?>

@@ -18,6 +18,7 @@
   margin: 0;
   font-family: "Raleway", sans-serif;
   line-height: 1.2;
+  transition: 90ms ease-in-out;
 }
 html {
   width: 100vw;
@@ -143,19 +144,7 @@ ul {
   font-weight: var(--regular);
   font-size: 0.7rem;
 }
-.book {
-  border-radius: 0.75rem;
-  border: none;
-  padding: 0.25rem 0.75rem;
-  width: fit-content;
-  background-color: var(--color3);
-  color: var(--header);
-  font-weight: var(--semibold);
-}
-.book:hover {
-  background-color: var(--color4);
-  color: white;
-}
+  
 footer {
   padding: 2rem;
   text-align: center;
@@ -179,6 +168,7 @@ footer {
   padding: 3.75rem 4.5625rem;
   border-radius: 3.1875rem;
   width: 37.5rem;
+  box-shadow: 0.1rem 0.1rem 2rem -1rem black;
 }
 .login-box,
 .login-box form {
@@ -237,7 +227,7 @@ footer {
   gap: 0.625rem;
   justify-content: center;
   font-size: 1.25rem;
-  color: var(--color1);
+  color: var(--color4);
 }
 .login-box .signup,
 .login-box .login {
@@ -259,6 +249,7 @@ footer {
   border-radius: 1.25rem;
   overflow: hidden;
   height: fit-content;
+  box-shadow: 1px 1px 19px -10px #000000;
 }
 .inner-poster img {
   width: 100%;
@@ -287,6 +278,7 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  box-shadow: 1px 1px 19px -10px #000000;
 }
 .inner-poster-details-title {
   font-weight: var(--semibold);
@@ -325,6 +317,9 @@ footer {
 .inner-details-sub-title {
   color: white;
   font-size: 1.25rem;
+  font-weight: var(--semibold);
+  display: flex;
+  justify-content: space-between;
 }
 .showdate-container,
 .showtime-container {
@@ -410,6 +405,43 @@ footer {
 .seat:hover {
   background-color: #d9d9d9;
 }
+.seat-indicator {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.2rem;
+}
+.seat-available,
+.seat-booked,
+.seat-selected {
+  border-radius: 0.6rem;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.seat-available {
+  background-color: white;
+}
+.seat-booked {
+  background-color: #676f9d;
+}
+.seat-selected {
+  background-color: var(--color3);
+}
+.seat-counter {
+  display: none;
+}
+.seat-data {
+  display: flex;
+  color: white;
+  justify-content: space-between;
+  font-size: 1.7rem;
+}
+.seat-indicator span {
+  color: white;
+  font-weight: var(--regular);
+  font-size: 1rem;
+}
 .indicator {
   background-color: var(--color2);
   border-radius: 1.8rem;
@@ -417,6 +449,7 @@ footer {
   display: flex;
   gap: 2.8rem;
   width: fit-content;
+  box-shadow: 1px 1px 19px -10px #000000;
 }
 .indicator-text {
   font-size: 1.25rem;
@@ -445,6 +478,7 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  box-shadow: 1px 1px 19px -10px #000000;
 }
 .management-head {
   display: flex;
@@ -608,4 +642,103 @@ iframe {
 }
 .action-delete {
   color: #e05d5d;
+}
+.confirm-booking {
+  text-align: center;
+}
+.profile-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 3rem 5rem;
+  flex-direction: column;
+  gap: 2rem;
+}
+.profile-body {
+  background-color: var(--color2);
+  border-radius: 1.8rem;
+  padding: 1.8rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 1px 1px 19px -10px #000000;
+  width: 100%;
+}
+.profile-info {
+  display: flex;
+  gap: 3rem;
+  flex-direction: row;
+}
+.profile {
+  display: flex;
+  border-radius: 10rem;
+  background-color: var(--color4);
+  padding: 1rem;
+  width: 5rem;
+  height: 5rem;
+  justify-content: center;
+  align-items: center;
+}
+.profile i {
+  font-size: 3rem;
+}
+.profile-text {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 1.2rem;
+  gap: 0.5rem;
+  font-weight: var(--regular);
+}
+.profile-username {
+  font-weight: var(--semibold);
+}
+.profile-role {
+  background-color: var(--color3);
+  border-radius: 2rem;
+  width: fit-content;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color1);
+  font-weight: var(--regular);
+}
+.profile-body-title {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: var(--semibold);
+}
+.profile-body table {
+  width: 100%;
+  color: white;
+  text-align: left;
+  font-size: 1rem;
+}
+.profile-body table th {
+  font-weight: var(--semibold);
+  width: 50%;
+  padding-bottom: 0.7rem;
+}
+.profile-body table td {
+  font-weight: var(--regular);
+  margin-bottom: 1rem;
+}
+.profile-actions {
+  display: flex;
+  gap: 1rem;
+}
+.profile-button {
+  padding: 0.7rem 1rem;
+  background-color: var(--color4);
+  border: none;
+  border-radius: 1rem;
+  color: white;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 1rem;
+}
+.profile-button i {
+  color: white;
+}
+.profile-button:hover{
+  background-color: var(--color3);
 }

@@ -31,7 +31,6 @@ include("includes/connection.php");
             <div class="details">
               <p class="movie-name"><?= $row["title"]; ?></p>
               <span class="movie-details"><?= $row["language"]; ?> | <?= $row["genre"]; ?></span>
-              <!-- <button class="book">Book</button> -->
 
             </div>
           </a>

@@ -31,6 +31,9 @@ if (isset($_POST['add_movie'])) {
 
 <head>
     <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 </head>
 
 <form method="POST" enctype="multipart/form-data" class="form">
@@ -78,5 +81,36 @@ if (isset($_POST['add_movie'])) {
     <label for="poster">Poster:</label>
     <input type="file" name="poster" accept="image/*" required><br>
 
+    <label>
+        Showtimes
+        <button type="button" class="button add addShowtime" onclick="addShowDate()"><i class="fa-solid fa-plus"></i> Add Date</button>
+
+    </label>
+    <div id="showdateContainer">
+
+    </div>
+
     <button type="submit" name="add_movie" class="button add" style="text-align: center;">Add Movie</button>
 </form>
+<script>
+    let dateIndex = 0;
+
+    function addShowDate() {
+        const container = document.getElementById("showdateContainer");
+        const div = document.createElement("div");
+        div.innerHTML = `
+        <div class="dates">
+            <label>Show Date:</label>
+            <input type="date" name="new_show_date[${dateIndex}]" required>
+            <label>
+                Show Times:
+            </label>
+            <div class="showtimeContainer">
+                <input type="time" name="new_show_time[${dateIndex}][]" required>
+            </div>
+        </div>
+    `;
+        container.appendChild(div);
+        dateIndex++;
+    }
+</script>
