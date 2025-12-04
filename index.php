@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("includes/connection.php");
+include("includes/db_helper.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,23 +21,22 @@ include("includes/connection.php");
   </header>
   <main class="movie-grid">
     <?php
-    $result = mysqli_query($db_server, "SELECT * from movies");
-    if (mysqli_num_rows($result) > 0) {
-      while ($row = mysqli_fetch_assoc($result)) {
+    $movies = get_all_rows($db_server, "SELECT * from movies");
+
+    foreach ($movies as $movie) {
     ?>
-        <div class="movie-card">
-          <a href="pages/movie.php?id=<?= $row['movie_id'] ?>">
+      <div class="movie-card">
+        <a href="pages/movie.php?id=<?= $movie['movie_id'] ?>">
 
-            <img src="assets/image/<?= $row["poster"]; ?>" alt="Movie" />
-            <div class="details">
-              <p class="movie-name"><?= $row["title"]; ?></p>
-              <span class="movie-details"><?= $row["language"]; ?> | <?= $row["genre"]; ?></span>
+          <img src="assets/image/<?= $movie["poster"]; ?>" alt="Movie" />
+          <div class="details">
+            <p class="movie-name"><?= $movie["title"]; ?></p>
+            <span class="movie-details"><?= $movie["language"]; ?> | <?= $movie["genre"]; ?></span>
 
-            </div>
-          </a>
-        </div>
+          </div>
+        </a>
+      </div>
     <?php
-      }
     }
     ?>
 

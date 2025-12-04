@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("../includes/connection.php");
+include("../includes/db_helper.php");
 include("../auth/checkAuth.php");
 
 ?>
@@ -21,10 +22,8 @@ include("../auth/checkAuth.php");
   <?php include("../includes/header.php"); ?>
   <?php
 
-  $movie_count = mysqli_fetch_assoc(mysqli_query($db_server, "Select count(*) as total_movies from movies"));
-  $total_movies = $movie_count["total_movies"];
-  $users_count = mysqli_fetch_assoc(mysqli_query($db_server, "Select count(*) as total_users from users"));
-  $total_users = $users_count["total_users"];
+  $movie_count = get_one_row($db_server, "SELECT COUNT(*) AS total_movies FROM movies");
+  $users_count = get_one_row($db_server, "SELECT COUNT(*) AS total_users FROM users");
   ?>
   <div class="indicators-menu">
     <div class="indicator">
@@ -71,24 +70,23 @@ include("../auth/checkAuth.php");
 
           </tr>
           <?php
-          $movies = mysqli_query($db_server, "Select * from movies");
-          if (mysqli_num_rows($movies) > 0) {
-            while ($row = mysqli_fetch_assoc($movies)) {
+          $movies = get_all_rows($db_server, "SELECT * FROM movies");
+          foreach ($movies as $row) {
           ?>
-              <tr>
-                <td><?= $row["title"] ?></td>
-                <td><?= $row["genre"] ?></td>
-                <td><?= $row["duration"] ?> mins</td>
-                <td class="action">
-                  <i class="fa-solid fa-pen-to-square action-edit" onclick="openModel('admin_edit_movie.php?id=<?= $row["movie_id"] ?>')"></i>
-                  <a href="admin_delete_movie.php?id=<?=$row["movie_id"]?>" onclick="return confirm('Are you sure you want to delete this movie?')">
-                    <i class="fa-solid fa-trash action-delete"></i>
-                  </a>
-                </td>
-              </tr>
+            <tr>
+              <td><?= $row["title"] ?></td>
+              <td><?= $row["genre"] ?></td>
+              <td><?= $row["duration"] ?> mins</td>
+              <td class="action">
+                <i class="fa-solid fa-pen-to-square action-edit" onclick="openModel('admin_edit_movie.php?id=<?= $row["movie_id"] ?>')"></i>
+                <a href="admin_delete_movie.php?id=<?= $row["movie_id"] ?>" onclick="return confirm('Are you sure you want to delete this movie?')">
+                  <i class="fa-solid fa-trash action-delete"></i>
+                </a>
+              </td>
+            </tr>
           <?php
-            }
           }
+
           ?>
         </table>
       </div>

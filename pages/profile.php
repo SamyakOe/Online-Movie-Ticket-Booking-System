@@ -2,10 +2,10 @@
 session_start();
 include("../includes/connection.php");
 include("../auth/checkAuth.php");
+include("../includes/db_helper.php");
 
 $id = $_SESSION["user_id"];
-$result = mysqli_query($db_server, "Select * from users where id='$id'");
-$user = mysqli_fetch_assoc($result);
+$user = get_one_row($db_server, "SELECT * FROM users WHERE id=?", [$id], 'i');
 
 ?>
 <!DOCTYPE html>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("../includes/connection.php");
+include("../includes/db_helper.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,11 +22,9 @@ include("../includes/connection.php");
 
     if (isset($_GET['ajax']) && $_GET['ajax'] == 1) {
         $selected_showDate = $_GET["show_date"];
-        $showtime = mysqli_query($db_server, "SELECT * FROM showtime WHERE movie_id='$id' AND show_date='$selected_showDate'");
-        $showtime_data = [];
-        while ($row = mysqli_fetch_assoc($showtime)) {
-            $showtime_data[] = $row;
-        }
+
+        $params = array($id, $selected_showDate);
+        $showtime_data = get_all_rows($db_server, "SELECT * FROM showtime WHERE movie_id= ? AND show_date= ?", $params, "is");
 
         foreach ($showtime_data as $showtime_row) { ?>
             <div class="showtime-card" onclick="selectShowTime(this)">
@@ -35,8 +34,7 @@ include("../includes/connection.php");
         exit;
     }
 
-    $result = mysqli_query($db_server, "Select * from movies where movie_id=$id");
-    $movie = mysqli_fetch_assoc($result);
+    $movie = get_one_row($db_server, "SELECT * FROM movies WHERE movie_id=?", [$id], "i");
     include("../includes/header.php"); ?>
 
     <main class="app">
@@ -80,12 +78,9 @@ include("../includes/connection.php");
                 </div>
                 <?php
 
-                $showdate = mysqli_query($db_server, "SELECT * FROM showtime WHERE movie_id = $id GROUP BY show_date ORDER BY show_date");
-                $showdate_data = [];
-                while ($row = mysqli_fetch_assoc($showdate)) {
-                    $showdate_data[] = $row;
-                }
+                $query = "SELECT * FROM showtime WHERE movie_id = ? GROUP BY show_date ORDER BY show_date";
 
+                $showdate_data = get_all_rows($db_server, $query, [$id], "i");
 
                 ?>
                 <div class="inner-details-block">

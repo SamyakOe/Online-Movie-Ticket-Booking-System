@@ -14,7 +14,7 @@
 
     <li><a href="/moviebooking/pages/profile.php" class="menu-links">My Profile</a></li>
 
-    <?php if (isset($_SESSION["user_name"]) && $_SESSION["user_role"] === "1") { ?>
+    <?php if (isset($_SESSION["user_name"]) && $_SESSION["user_role"] ===1) { ?>
       <li><a href="/moviebooking/admin/admin.php" class="menu-links">Admin Panel</a></li>
     <?php }  ?>
 

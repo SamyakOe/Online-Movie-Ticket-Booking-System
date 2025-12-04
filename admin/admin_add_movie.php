@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("../includes/connection.php");
+include("../includes/db_helper.php");
 include("../auth/checkAuth.php");
 
 if (isset($_POST['add_movie'])) {
@@ -19,9 +20,9 @@ if (isset($_POST['add_movie'])) {
     move_uploaded_file($temp, "../assets/image/" . $poster);
 
     $query = "INSERT INTO movies (title, genre, language, director, cast, duration, release_date, description, poster)
-              VALUES ('$title', '$genres_string','$language', '$director', '$cast', '$duration', '$release_date', '$description', '$poster' )";
-
-    if (mysqli_query($db_server, $query)) {
+              VALUES (?,?,?,?,?,?,?,?,?)";
+    $params = array($title, $genres_string, $language, $director, $cast, $duration, $release_date, $description, $poster);
+    if (execute_query($db_server, $query, $params, "sssssisss")) {
         echo "<script>alert('Movie added successfully!');</script>";
     } else {
         echo "Error: " . mysqli_error($db_server);

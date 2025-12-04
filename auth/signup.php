@@ -1,5 +1,7 @@
 <?php
 include("../includes/connection.php");
+include("../includes/db_helper.php");
+
 $message = $message_class = "";
 if (isset($_POST['signup'])) {
   $email = trim(mysqli_real_escape_string($db_server, $_POST['email']));
@@ -8,8 +10,8 @@ if (isset($_POST['signup'])) {
   $password = trim(mysqli_real_escape_string($db_server, $_POST['password']));
   $confirm_password = trim(mysqli_real_escape_string($db_server, $_POST['confirm_password']));
 
-  $check = mysqli_query($db_server, "Select * from users where email='$email'");
-  if ($check && mysqli_num_rows($check) > 0) {
+  $check = get_all_rows($db_server, "SELECT * FROM users WHERE email=?", $email, 's');
+  if ($check && count($check) > 0) {
     $message = "Email already exists!";
     $message_class = "error";
   } else {
@@ -35,7 +37,12 @@ if (isset($_POST['signup'])) {
       } else {
         $hashed = password_hash($password, PASSWORD_DEFAULT);
         $query = "Insert into users (email, name, mobile_no, password) Values ('$email', '$name', '$mobile_no', '$hashed')";
-        if (mysqli_query($db_server, $query)) {
+        $query = "Insert into users (email, name, mobile_no, password) Values (?, ?, ? ?)";
+        $params = array($email, $name, $mobile_no, $hashed);
+        $types = "ssss";
+        $success = execute_query($db_server, $query, $params, $types);
+
+        if ($success) {
           $message = "Signup successful!";
           $message_class = "success";
         }

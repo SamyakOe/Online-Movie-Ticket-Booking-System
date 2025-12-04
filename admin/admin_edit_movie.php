@@ -1,18 +1,15 @@
 <?php
 session_start();
 include("../includes/connection.php");
+include("../includes/db_helper.php");
 include("../auth/checkAuth.php");
 $movie_id = $_GET['id'];
 
-$result = mysqli_query($db_server, "Select * from movies where movie_id='$movie_id'");
-$movie = mysqli_fetch_assoc($result);
-
-$showtimes = mysqli_query($db_server, "
-  SELECT showtime_id, show_date, show_time 
+$movie = get_one_row($db_server, "SELECT * FROM movies WHERE movie_id=?", [$movie_id], "i");
+$showtimes = get_all_rows($db_server, "SELECT showtime_id, show_date, show_time 
   FROM showtime 
-  WHERE movie_id='$movie_id' 
-  ORDER BY show_date, show_time
-");
+  WHERE movie_id=? 
+  ORDER BY show_date, show_time", [$movie_id], "i");
 
 
 if (isset($_POST['edit_movie'])) {
@@ -31,26 +28,15 @@ if (isset($_POST['edit_movie'])) {
     if ($poster = $_FILES['poster']['name']) {
         $temp = $_FILES['poster']['tmp_name'];
         move_uploaded_file($temp, "../assets/image/" . $poster);
-        mysqli_query($db_server, "UPDATE movies set poster='$poster' where movie_id='$movie_id'");
+        execute_query($db_server, "UPDATE movies SET poster='$poster' WHERE movie_id=?", [$movie_id], "i");
     }
 
-    $movie_query = "UPDATE movies 
-                set title='$title', 
-                genre='$genres_string', 
-                language='$language', 
-                director='$director', 
-                cast='$cast', 
-                duration='$duration', 
-                release_date='$release_date', 
-                description='$description'
-                where movie_id='$movie_id'";
+
 
     if (!empty($_POST['show_date']) && is_array($_POST['show_date'])) {
         foreach ($_POST['show_date'] as $id => $date) {
             $time = $_POST['show_time'][$id];
-            $stmt = $db_server->prepare("UPDATE showtime SET show_date=?, show_time=? WHERE showtime_id=?");
-            $stmt->bind_param("ssi", $date, $time, $id);
-            $stmt->execute();
+            execute_query($db_server, "UPDATE showtime SET show_date=?, show_time=? WHERE showtime_id=?", [$date, $time, $id], "ssi");
         }
     }
 
@@ -59,20 +45,25 @@ if (isset($_POST['edit_movie'])) {
         foreach ($_POST['new_show_date'] as $i => $date) {
             if (!empty($_POST['new_show_time'][$i])) {
                 foreach ($_POST['new_show_time'][$i] as $time) {
-                    mysqli_query(
-                        $db_server,
-                        "INSERT INTO showtime (movie_id, show_date, show_time) 
-                     VALUES ('$movie_id', '$date', '$time')"
-                    );
+                    $query = "INSERT INTO showtime (movie_id, show_date, show_time) 
+                     VALUES (?,?,?)";
+                    execute_query($db_server, $query, [$movie_id, $date, $time], "iss");
                 }
             }
         }
     }
-
-
-
-
-    if (mysqli_query($db_server, $movie_query)) {
+    $movie_query = "UPDATE movies 
+                SET title= ?, 
+                genre=?, 
+                language=?, 
+                director=?, 
+                cast=?, 
+                duration=?, 
+                release_date=?, 
+                description=?
+                WHERE movie_id=?";
+    $params = array($title, $genres_string, $language, $director, $cast, $duration, $release_date, $description, $movie_id);
+    if (execute_query($db_server, $movie_query, $params, "sssssissi")) {
         echo "<script>alert('Movie edited successfully!');</script>";
     } else {
         echo "Error: " . mysqli_error($db_server);
@@ -144,7 +135,7 @@ if (isset($_POST['edit_movie'])) {
 
     </label>
     <div id="showdateContainer">
-        <?php while ($row = mysqli_fetch_assoc($showtimes)) { ?>
+        <?php foreach ($showtimes as $row) { ?>
             <div class="dates">
                 <label>Show Date:</label>
                 <input type="date" name="show_date[<?= $row['showtime_id']; ?>]" value="<?= $row['show_date']; ?>" required>

@@ -1,13 +1,13 @@
 <?php
 include("../includes/connection.php");
+include("../includes/db_helper.php");
 session_start();
 $message = $message_class = "";
 if (isset($_POST['submit'])) {
   $email = trim(mysqli_real_escape_string($db_server, $_POST['email']));
   $password = trim(mysqli_real_escape_string($db_server, $_POST['password']));
 
-  $result = mysqli_query($db_server, "SELECT * FROM users WHERE email='$email'");
-  $user = mysqli_fetch_assoc($result);
+  $user = get_one_row($db_server, "SELECT * FROM users WHERE email=?", [$email], "s");
 
   if ($user && password_verify($password, $user['password'])) {
     $_SESSION['user_id'] = $user['id'];
@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-  <?php include("../includes/header.php");?>
+  <?php include("../includes/header.php"); ?>
   <main class="login-container">
     <div class="login-box">
       <p class="head">Login</p>
@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
     </div>
   </main>
 
-   <?php include("../includes/footer.php");?>
+  <?php include("../includes/footer.php"); ?>
   <?php if ($message_class === "success") { ?>
     <script>
       setTimeout(() => {
