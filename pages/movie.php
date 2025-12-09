@@ -144,7 +144,9 @@ include("../includes/db_helper.php");
                     <div class="seat-data">
                         <span class="selected-seats"></span><span class="total-seat-amount"></span>
                     </div>
-                    <div class="button confirm-booking">Confirm Booking</div>
+                    <a href="">
+                        <div class="button confirm-booking" >Confirm Booking</div>
+                    </a>
                 </div>
             </article>
         </section>

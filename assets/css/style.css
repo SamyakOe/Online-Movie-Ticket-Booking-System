@@ -90,16 +90,18 @@ ul {
   color: white;
 }
 .hero {
-  padding: 5rem;
+  padding: 4rem;
   text-align: center;
   background-color: var(--color1);
   font-size: 3.4375rem;
   font-weight: 700;
   color: white;
 }
+
 .movie-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: minmax(auto, 21rem);
   padding: 0 5rem;
   gap: clamp(1.5rem, 1.7rem, 2rem);
   justify-items: center;
@@ -110,12 +112,10 @@ ul {
 .movie-card {
   background-color: var(--color2);
   overflow: hidden;
-  text-align: center;
+  text-align: left;
   border-radius: 0.5rem;
   width: 100%;
-  /* max-width: 14rem; */
-  /* min-width: 12rem; */
-  height: 22.8125rem;
+  height: 100%;
   box-shadow: 0 0.125rem 0.9375rem rgb(0, 0, 0, 0.5);
   transition: all 0.2s ease-in-out;
 }
@@ -125,17 +125,16 @@ ul {
 }
 .movie-card img {
   width: 100%;
-  height: 70%;
+  height: 65%;
 }
 .details {
-  padding: 0.6rem 0.6rem;
+  padding: 0.5rem 0.7rem;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
   color: white;
-  align-items: center;
   justify-content: flex-start;
-  height: 30%;
+  height: 35%;
 }
 .movie-name {
   font-weight: var(--semibold);
@@ -144,7 +143,7 @@ ul {
   font-weight: var(--regular);
   font-size: 0.7rem;
 }
-  
+
 footer {
   padding: 2rem;
   text-align: center;
@@ -739,6 +738,6 @@ iframe {
 .profile-button i {
   color: white;
 }
-.profile-button:hover{
+.profile-button:hover {
   background-color: var(--color3);
 }

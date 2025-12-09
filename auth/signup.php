@@ -36,7 +36,6 @@ if (isset($_POST['signup'])) {
         $message_class = "error";
       } else {
         $hashed = password_hash($password, PASSWORD_DEFAULT);
-        $query = "Insert into users (email, name, mobile_no, password) Values ('$email', '$name', '$mobile_no', '$hashed')";
         $query = "Insert into users (email, name, mobile_no, password) Values (?, ?, ? ?)";
         $params = array($email, $name, $mobile_no, $hashed);
         $types = "ssss";

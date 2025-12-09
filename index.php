@@ -19,20 +19,20 @@ include("includes/db_helper.php");
   <header class="hero">
     Now Showing
   </header>
+
   <main class="movie-grid">
     <?php
-    $movies = get_all_rows($db_server, "SELECT * from movies");
+    $movies = get_all_rows($db_server, "SELECT * FROM movies");
 
     foreach ($movies as $movie) {
     ?>
       <div class="movie-card">
         <a href="pages/movie.php?id=<?= $movie['movie_id'] ?>">
 
-          <img src="assets/image/<?= $movie["poster"]; ?>" alt="Movie" />
+          <img src="assets/image/<?= $movie["poster"]; ?>" alt="<?= $movie["title"]; ?>" />
           <div class="details">
             <p class="movie-name"><?= $movie["title"]; ?></p>
             <span class="movie-details"><?= $movie["language"]; ?> | <?= $movie["genre"]; ?></span>
-
           </div>
         </a>
       </div>
