@@ -108,14 +108,14 @@ if (isset($_POST['signup'])) {
   </main>
 
   <?php include("../includes/footer.php"); ?>
-  <?php if ($message_class === "success") { ?>
-    <script>
-      setTimeout(() => {
-        window.location.href = "login.php";
-      }, 3000);
-    </script>
-  <?php } ?>
 </body>
+<?php if ($message_class === "success") { ?>
+  <script>
+    setTimeout(() => {
+      window.location.href = "login.php";
+    }, 3000);
+  </script>
+<?php } ?>
 <script>
   function validate() {
     const mobileNo = document.getElementById("mobileNo").value;

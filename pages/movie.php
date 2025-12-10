@@ -96,10 +96,7 @@ include("../includes/db_helper.php");
                 </div>
                 <div class="inner-details-block">
                     <p class="inner-details-sub-title">Select Time</p>
-                    <div class="showtime-container">
-
-
-                    </div>
+                    <div class="showtime-container"></div>
                 </div>
                 <div class="inner-details-block">
                     <p class="inner-details-sub-title">Select Seat</p>
