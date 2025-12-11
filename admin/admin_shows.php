@@ -20,7 +20,7 @@ include("../auth/checkAuth.php");
         <div class="management-head">
             <p>Shows</p>
 
-            <div class="button add" onclick="openModel('')"><i class="fa-solid fa-plus"></i>
+            <div class="button add" onclick="openModel('admin_add_show.php')"><i class="fa-solid fa-plus"></i>
                 <p>Add Show</p>
             </div>
 

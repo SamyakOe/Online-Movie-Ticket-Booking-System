@@ -614,6 +614,7 @@ iframe {
   padding-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
+  height: auto;
 }
 .form p {
   font-weight: var(--semibold);
@@ -623,7 +624,7 @@ iframe {
 .form input[type="number"],
 .form input[type="time"],
 .form textarea,
-.form input[type="date"] {
+.form input[type="date"],.form select {
   border-radius: 0.5rem;
   width: 100%;
   padding: 0.5rem 1rem;
@@ -637,7 +638,9 @@ iframe {
   height: fit-content;
   resize: vertical;
 }
-
+.form select{
+    background-color: var(--color4);
+}
 .form input::placeholder {
   font-size: 1.25rem;
 }
@@ -680,6 +683,9 @@ iframe {
 }
 .addShowtime {
   font-size: 1rem;
+}
+.showContainer{
+  display: none;
 }
 .admin-content-table {
   border: none;
