@@ -87,6 +87,9 @@ ul {
   font-weight: var(--semibold);
 }
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: var(--semibold);
   background-color: var(--color3);
   border-radius: 2rem;
@@ -100,7 +103,9 @@ ul {
   color: white;
   cursor: pointer;
 }
-
+.button span {
+  color: white;
+}
 .hero {
   padding: 4rem;
   text-align: center;
@@ -326,6 +331,9 @@ footer {
   font-weight: var(--regular);
   font-size: 1.25rem;
 }
+.inner_details_confirm_description {
+  color: var(--color3);
+}
 .inner-details-sub-title {
   color: white;
   font-size: 1.25rem;
@@ -382,6 +390,9 @@ footer {
   font-size: 1.25rem;
   text-align: center;
 }
+.seatSelectionContainer {
+  display: none;
+}
 .seat-container {
   display: grid;
   grid-template-columns: 1fr 10fr;
@@ -389,6 +400,7 @@ footer {
   gap: 1rem;
   margin-top: 1.5rem;
 }
+
 .seat-label {
   display: grid;
   grid-template-columns: 1fr;
@@ -443,6 +455,10 @@ footer {
 .seat-counter {
   display: none;
 }
+.seat-counter form {
+  display: flex;
+  justify-content: flex-end;
+}
 .seat-data {
   display: flex;
   color: white;
@@ -464,7 +480,7 @@ footer {
   grid-area: main;
   min-height: 88vh;
 }
-.adminContent{
+.adminContent {
   width: 100%;
   height: 100%;
   border: none;
@@ -480,12 +496,12 @@ footer {
 .sidebar ul {
   display: flex;
   flex-direction: column;
-      align-items: flex-start;
-/* padding-left: 1rem; */
+  align-items: flex-start;
+  /* padding-left: 1rem; */
 }
 .sidebar ul li {
   color: white;
-  
+
   width: 100%;
   font-weight: var(--regular);
 }
@@ -494,14 +510,13 @@ footer {
   color: var(--color2);
   font-weight: var(--semibold);
 }
-.sidebar ul li a{
+.sidebar ul li a {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 1rem;
   padding-right: 2.5rem;
   padding-left: 1rem;
-  
 }
 .indicator {
   background-color: var(--color2);
@@ -624,7 +639,8 @@ iframe {
 .form input[type="number"],
 .form input[type="time"],
 .form textarea,
-.form input[type="date"],.form select {
+.form input[type="date"],
+.form select {
   border-radius: 0.5rem;
   width: 100%;
   padding: 0.5rem 1rem;
@@ -638,8 +654,8 @@ iframe {
   height: fit-content;
   resize: vertical;
 }
-.form select{
-    background-color: var(--color4);
+.form select {
+  background-color: var(--color4);
 }
 .form input::placeholder {
   font-size: 1.25rem;
@@ -684,7 +700,7 @@ iframe {
 .addShowtime {
   font-size: 1rem;
 }
-.showContainer{
+.showContainer {
   display: none;
 }
 .admin-content-table {
@@ -726,6 +742,7 @@ iframe {
 }
 .confirm-booking {
   text-align: center;
+  align-items: flex-end;
 }
 .profile-container {
   display: flex;
@@ -822,6 +839,36 @@ iframe {
 }
 .profile-button:hover {
   background-color: var(--color3);
+}
+
+.confirm-body-container {
+  display: grid;
+
+  gap: 1rem;
+}
+.confirm-inner-body {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  width: 100%;
+}
+.inner-details-block table {
+  width: 100%;
+  color: white;
+  font-size: 1rem;
+}
+.inner-details-block table th {
+  font-weight: 600;
+  text-align: left;
+  padding-right: 0.2rem;
+}
+.inner-details-block table td {
+  padding: 0.3rem 0;
+  color: white;
+}
+.confirm-cancel {
+  flex-direction: row;
+  gap: 1rem;
 }
 /* ============================================
    RESPONSIVE CSS FOR HOME PAGE (index.php)
@@ -1465,7 +1512,6 @@ iframe {
   .showtime-card {
     padding: 1rem 1.2rem;
     border-radius: 1rem;
-    
   }
 
   .month {

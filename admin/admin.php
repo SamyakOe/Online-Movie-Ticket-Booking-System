@@ -2,7 +2,7 @@
 session_start();
 include("../includes/connection.php");
 include("../includes/db_helper.php");
-include("../auth/checkAuth.php");
+require("../auth/checkAuth.php");
 
 ?>
 <!DOCTYPE html>

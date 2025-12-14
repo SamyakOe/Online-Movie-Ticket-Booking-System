@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("../includes/connection.php");
-include("../auth/checkAuth.php");
+require("../auth/checkAuth.php");
 include("../includes/db_helper.php");
 
 $id = $_SESSION["user_id"];

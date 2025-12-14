@@ -34,7 +34,7 @@ $movies = get_all_rows($db_server, "SELECT movie_id, title FROM movies") ?>
     <select name="movie" id="movie" onchange="displayShowContainer()">
         <option value="" selected hidden>Choose a Movie</option>
         <?php foreach ($movies as $movie) { ?>
-            <option value="$movie['title']"><?= $movie['title'] ?></option>
+            <option value="<?= $movie['title'] ?>"><?= $movie['title'] ?></option>
         <?php } ?>
     </select>
 

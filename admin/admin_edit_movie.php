@@ -6,10 +6,6 @@ include("../auth/checkAuth.php");
 $movie_id = $_GET['id'];
 
 $movie = get_one_row($db_server, "SELECT * FROM movies WHERE movie_id=?", [$movie_id], "i");
-$showtimes = get_all_rows($db_server, "SELECT showtime_id, show_date, show_time 
-  FROM showtime 
-  WHERE movie_id=? 
-  ORDER BY show_date, show_time", [$movie_id], "i");
 
 
 if (isset($_POST['edit_movie'])) {
@@ -31,27 +27,6 @@ if (isset($_POST['edit_movie'])) {
         execute_query($db_server, "UPDATE movies SET poster='$poster' WHERE movie_id=?", [$movie_id], "i");
     }
 
-
-
-    if (!empty($_POST['show_date']) && is_array($_POST['show_date'])) {
-        foreach ($_POST['show_date'] as $id => $date) {
-            $time = $_POST['show_time'][$id];
-            execute_query($db_server, "UPDATE showtime SET show_date=?, show_time=? WHERE showtime_id=?", [$date, $time, $id], "ssi");
-        }
-    }
-
-
-    if (!empty($_POST['new_show_date'])) {
-        foreach ($_POST['new_show_date'] as $i => $date) {
-            if (!empty($_POST['new_show_time'][$i])) {
-                foreach ($_POST['new_show_time'][$i] as $time) {
-                    $query = "INSERT INTO showtime (movie_id, show_date, show_time) 
-                     VALUES (?,?,?)";
-                    execute_query($db_server, $query, [$movie_id, $date, $time], "iss");
-                }
-            }
-        }
-    }
     $movie_query = "UPDATE movies 
                 SET title= ?, 
                 genre=?, 
@@ -128,24 +103,7 @@ if (isset($_POST['edit_movie'])) {
 
     <label for="release_date">Released Date:</label>
     <input type="date" name="release_date" value="<?= $movie["release_date"] ?>" required>
-
-    <label>
-        Showtimes
-        <button type="button" class="button add addShowtime" onclick="addShowDate()"><i class="fa-solid fa-plus"></i> Add Date</button>
-
-    </label>
-    <div id="showdateContainer">
-        <?php foreach ($showtimes as $row) { ?>
-            <div class="dates">
-                <label>Show Date:</label>
-                <input type="date" name="show_date[<?= $row['showtime_id']; ?>]" value="<?= $row['show_date']; ?>" required>
-
-                <label>Show Time:</label>
-                <input type="time" name="show_time[<?= $row['showtime_id']; ?>]" value="<?= $row['show_time']; ?>" required>
-            </div>
-        <?php } ?>
-
-    </div>
+    
 
     <label>Current Poster:</label>
     <img src="../assets/image/<?= $movie["poster"] ?>" alt="<?= $movie["title"] ?>" width="25%">
@@ -154,25 +112,3 @@ if (isset($_POST['edit_movie'])) {
 
     <button type="submit" name="edit_movie" class="button add" style="text-align: center;">Edit Movie</button>
 </form>
-<script>
-    let dateIndex = 0;
-
-    function addShowDate() {
-        const container = document.getElementById("showdateContainer");
-        const div = document.createElement("div");
-        div.innerHTML = `
-        <div class="dates">
-            <label>Show Date:</label>
-            <input type="date" name="new_show_date[${dateIndex}]" required>
-            <label>
-                Show Times:
-            </label>
-            <div class="showtimeContainer">
-                <input type="time" name="new_show_time[${dateIndex}][]" required>
-            </div>
-        </div>
-    `;
-        container.appendChild(div);
-        dateIndex++;
-    }
-</script>
