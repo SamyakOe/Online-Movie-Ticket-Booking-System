@@ -212,7 +212,7 @@ include("../includes/db_helper.php");
         let xhttp = new XMLHttpRequest();
         xhttp.open("GET", "movie.php?get_booked_seats=1&showTimeId=" + id + "&ajax=1", true);
         xhttp.onload = function() {
-            const bookedSeats = JSON.parse(response);
+            const bookedSeats = JSON.parse(xhttp.responseText);
             bookedSeats.forEach(seatNumber => {
                 const seatElement = document.querySelector(`.seat[data-seatlabel="${seatNumber}"]`);
                 seatElement.classList.add('seat-booked'); // Makes it gray
@@ -270,6 +270,14 @@ include("../includes/db_helper.php");
         });
         updateSelectedSeats();
     }
+
+    document.getElementById('bookingForm').addEventListener('submit', (e) => {
+        <?php if (!isset($_SESSION['user_id'])) { ?>
+            e.preventDefault();
+            window.location.href = '../auth/login.php';
+            return false;
+        <?php } ?>
+    })
 </script>
 
 </html>
