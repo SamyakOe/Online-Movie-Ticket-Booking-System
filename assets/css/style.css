@@ -45,7 +45,6 @@ a {
   color: inherit;
 }
 
-
 /* Navigation */
 .navbar {
   display: flex;
@@ -171,8 +170,8 @@ footer {
   font-weight: var(--regular);
   padding: 2rem 0;
   width: 100%;
-position: relative;
-bottom: 0;
+  position: relative;
+  bottom: 0;
 }
 
 .login-container {
@@ -874,6 +873,56 @@ iframe {
   flex-direction: row;
   gap: 1rem;
 }
+.success-message {
+  background-color: var(--success);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  text-align: center;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+.success-message i {
+  font-size: 3rem;
+  color: white;
+  display: block;
+  margin-bottom: 1rem;
+}
+.booking-reference {
+  background-color: var(--color3);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color1);
+}
+/* Booking Success Page Inline Styles Cleanup */
+.booked-on-text {
+  color: white;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.full-width-button {
+  width: 100%;
+}
+
+.home-button {
+  width: 100%;
+  background-color: var(--color4);
+}
+
+.flex-row-gap {
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.info-block {
+  background-color: var(--color3);
+  color: var(--color1);
+}
+
 /* ============================================
    RESPONSIVE CSS FOR HOME PAGE (index.php)
    ============================================ */

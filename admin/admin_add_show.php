@@ -6,17 +6,18 @@ include("../auth/checkAuth.php");
 include("../auth/checkAdmin.php");
 
 
-if (isset($_POST['add_movie'])) {
-    $title = mysqli_real_escape_string($db_server, $_POST['title']);
-
-    $query = "INSERT INTO movies (title, genre, language, director, cast, duration, release_date, description, poster)
-              VALUES (?,?,?,?,?,?,?,?,?)";
-    $params = array($title, $genres_string, $language, $director, $cast, $duration, $release_date, $description, $poster);
-    if (execute_query($db_server, $query, $params, "sssssisss")) {
-        echo "<script>alert('Movie added successfully!');</script>";
-    } else {
-        echo "Error: " . mysqli_error($db_server);
+if (isset($_POST['add_show'])) {
+    $movie_id = $_POST['movie'];
+    $show_dates = $_POST['new_show_date'];
+    $show_times = $_POST['new_show_time'];
+    
+    foreach ($show_dates as $index => $date) {
+        foreach ($show_times[$index] as $time) {
+            $query = "INSERT INTO showtime (movie_id, show_date, show_time) VALUES (?, ?, ?)";
+            execute_query($db_server, $query, [$movie_id, $date, $time], "iss");
+        }
     }
+    echo "<script>alert('Show added successfully!');</script>";
 }
 ?>
 
@@ -36,7 +37,7 @@ $movies = get_all_rows($db_server, "SELECT movie_id, title FROM movies") ?>
     <select name="movie" id="movie" onchange="displayShowContainer()">
         <option value="" selected hidden>Choose a Movie</option>
         <?php foreach ($movies as $movie) { ?>
-            <option value="<?= $movie['title'] ?>"><?= $movie['title'] ?></option>
+            <option value="<?= $movie['movie_id'] ?>"><?= $movie['title'] ?></option>
         <?php } ?>
     </select>
 
@@ -79,5 +80,6 @@ $movies = get_all_rows($db_server, "SELECT movie_id, title FROM movies") ?>
     function displayShowContainer() {
         const container = document.getElementById("showContainer");
         container.style.display = "flex";
+        container.style.flexDirection="column";
     }
 </script>
