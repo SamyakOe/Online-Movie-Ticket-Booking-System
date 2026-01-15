@@ -3,6 +3,8 @@ session_start();
 include("../includes/connection.php");
 include("../includes/db_helper.php");
 include("../auth/checkAuth.php");
+include("../auth/checkAdmin.php");
+
 $movie_id = $_GET['id'];
 
 $movie = get_one_row($db_server, "SELECT * FROM movies WHERE movie_id=?", [$movie_id], "i");

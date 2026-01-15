@@ -135,7 +135,7 @@ include("../includes/db_helper.php");
                                 <span>G</span>
                                 <span>H</span>
                             </div>
-                            <div class="seat-map">
+                            <div class="seat-map" >
                                 <?php for ($i = 0; $i < 80; $i++) {
                                     $row = chr(65 + floor($i / 10));
                                     $col = ($i % 10) + 1;
@@ -278,6 +278,7 @@ include("../includes/db_helper.php");
             return false;
         <?php } ?>
     })
+  
 </script>
 
 </html>

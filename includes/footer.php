@@ -1,6 +1,4 @@
-  <footer>
-    ©MovieBook
-    <div></div>
-  </footer>
-</body>
-</html>
+<footer>
+  ©MovieBook
+  <div></div>
+</footer>

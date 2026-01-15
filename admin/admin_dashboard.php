@@ -3,6 +3,8 @@ session_start();
 include("../includes/connection.php");
 include("../includes/db_helper.php");
 include("../auth/checkAuth.php");
+include("../auth/checkAdmin.php");
+
 $movie_count = get_one_row($db_server, "SELECT COUNT(*) AS total_movies FROM movies");
 $users_count = get_one_row($db_server, "SELECT COUNT(*) AS total_users FROM users");
 ?>

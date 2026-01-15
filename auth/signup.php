@@ -10,7 +10,7 @@ if (isset($_POST['signup'])) {
   $password = trim(mysqli_real_escape_string($db_server, $_POST['password']));
   $confirm_password = trim(mysqli_real_escape_string($db_server, $_POST['confirm_password']));
 
-  $check = get_all_rows($db_server, "SELECT * FROM users WHERE email=?", $email, 's');
+  $check = get_all_rows($db_server, "SELECT * FROM users WHERE email=?", [$email], "s");
   if ($check && count($check) > 0) {
     $message = "Email already exists!";
     $message_class = "error";

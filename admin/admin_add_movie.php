@@ -3,6 +3,7 @@ session_start();
 include("../includes/connection.php");
 include("../includes/db_helper.php");
 include("../auth/checkAuth.php");
+include("../auth/checkAdmin.php");
 
 if (isset($_POST['add_movie'])) {
     $title = mysqli_real_escape_string($db_server, $_POST['title']);

@@ -22,11 +22,11 @@ $user = get_one_row($db_server, "SELECT * FROM users WHERE id=?", [$id], 'i');
 </head>
 
 <body>
+
     <?php include("../includes/header.php"); ?>
     <main class="profile-container">
         <div class="profile-body">
             <div class="profile-info">
-
                 <div class="profile"><i class="fa-solid fa-user"></i></div>
                 <div class="profile-text">
                     <p class="profile-username"><?= $user["name"] ?></p>
@@ -40,23 +40,37 @@ $user = get_one_row($db_server, "SELECT * FROM users WHERE id=?", [$id], 'i');
             <table>
                 <tr>
                     <th>Name</th>
-                    <th>Email</th>
+                    <td><?= $user["name"] ?></td>
                 </tr>
                 <tr>
-                    <td><?= $user["name"] ?></td>
+                    <th>Email</th>
                     <td><?= $user["email"] ?></td>
+                </tr>
+                <tr>
+                    <th>Contact</th>
+                    <td><?= $user["mobile_no"] ?></td>
+
                 </tr>
             </table>
             <hr>
             <div class="profile-actions">
-                <button class="profile-button"><i class="fa-solid fa-pen-to-square"></i>Edit Profile</button>
+                <button class="profile-button" onclick="openModel('../profile/edit_profile.php')"><i class="fa-solid fa-pen-to-square"></i>Edit Profile</button>
                 <button class="profile-button"><i class="fa-solid fa-key"></i>Change Password</button>
             </div>
         </div>
 
     </main>
-
     <?php include("../includes/footer.php"); ?>
+
+
+
 </body>
+<div class="model" id="model">
+    <div class="model-content">
+        <span class="close"><i class="fa-solid fa-xmark" onclick="closeModel()"></i></span>
+        <iframe src="" frameborder="0" height="100%" width="100%" id="model-frame"></iframe>
+    </div>
+</div>
+<script src="../assets/js/modelToggle.js"></script>
 
 </html>

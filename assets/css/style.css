@@ -45,6 +45,7 @@ a {
   color: inherit;
 }
 
+
 /* Navigation */
 .navbar {
   display: flex;
@@ -169,6 +170,9 @@ footer {
   font-size: 1.25rem;
   font-weight: var(--regular);
   padding: 2rem 0;
+  width: 100%;
+position: relative;
+bottom: 0;
 }
 
 .login-container {
@@ -811,7 +815,7 @@ iframe {
 }
 .profile-body table th {
   font-weight: var(--semibold);
-  width: 50%;
+  width: 30%;
   padding-bottom: 0.7rem;
 }
 .profile-body table td {

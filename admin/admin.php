@@ -3,6 +3,8 @@ session_start();
 include("../includes/connection.php");
 include("../includes/db_helper.php");
 require("../auth/checkAuth.php");
+include("../auth/checkAdmin.php");
+
 
 ?>
 <!DOCTYPE html>
