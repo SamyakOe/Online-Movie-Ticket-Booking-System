@@ -5,8 +5,10 @@ include("../includes/db_helper.php");
 include("../auth/checkAuth.php");
 include("../auth/checkAdmin.php");
 
+$user_id=$_SESSION["user_id"];
 $movie_count = get_one_row($db_server, "SELECT COUNT(*) AS total_movies FROM movies");
 $users_count = get_one_row($db_server, "SELECT COUNT(*) AS total_users FROM users");
+$bookings_count=get_one_row($db_server, "SELECT COUNT(*) AS total_bookings FROM bookings WHERE user_id=?",[$user_id],"i");
 ?>
 <head>
   <meta charset="UTF-8" />
@@ -28,7 +30,7 @@ $users_count = get_one_row($db_server, "SELECT COUNT(*) AS total_users FROM user
     <div class="indicator">
         <div class="indicator-text">
             Total Bookings
-            <p class="number"><? ?></p>
+            <p class="number"><?= $bookings_count["total_bookings"]; ?></p>
         </div>
         <i class="fa-solid fa-ticket indicator-icon"></i></i>
     </div>

@@ -922,7 +922,97 @@ iframe {
   background-color: var(--color3);
   color: var(--color1);
 }
-
+.booking-card {
+  background-color: var(--color2);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  display: grid;
+  grid-template-columns: 150px 1fr auto;
+  gap: 1.5rem;
+  align-items: center;
+  box-shadow: 1px 1px 19px -10px #000000;
+}
+.booking-poster {
+  width: 150px;
+  height: 200px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.booking-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.booking-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: white;
+}
+.booking-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+}
+.booking-detail {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+.booking-detail i {
+  color: var(--color3);
+  font-size: 1rem;
+}
+.booking-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.status-confirmed {
+  background-color: var(--success);
+  color: white;
+}
+.status-cancelled {
+  background-color: var(--error);
+  color: white;
+}
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: white;
+}
+.empty-state i {
+  font-size: 5rem;
+  color: var(--color4);
+  margin-bottom: 1rem;
+}
+.empty-state h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 768px) {
+  .booking-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .booking-poster {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+  .booking-actions {
+    width: 100%;
+  }
+}
 /* ============================================
    RESPONSIVE CSS FOR HOME PAGE (index.php)
    ============================================ */

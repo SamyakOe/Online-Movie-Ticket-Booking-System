@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2025 at 01:49 PM
+-- Generation Time: Jan 16, 2026 at 02:50 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,11 +32,20 @@ CREATE TABLE `bookings` (
   `user_id` int(11) NOT NULL,
   `movie_id` int(11) NOT NULL,
   `showtime_id` int(11) NOT NULL,
-  `seats` varchar(255) NOT NULL,
   `total_amount` decimal(10,2) NOT NULL,
   `booking_date` datetime DEFAULT current_timestamp(),
   `status` enum('confirmed','cancelled') DEFAULT 'confirmed'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`booking_id`, `user_id`, `movie_id`, `showtime_id`, `total_amount`, `booking_date`, `status`) VALUES
+(4, 2, 1, 1, 200.00, '2026-01-15 16:56:12', 'confirmed'),
+(5, 2, 1, 1, 600.00, '2026-01-15 21:37:50', 'confirmed'),
+(6, 2, 1, 19, 400.00, '2026-01-16 07:16:25', 'cancelled'),
+(7, 2, 1, 19, 400.00, '2026-01-16 07:32:01', 'confirmed');
 
 -- --------------------------------------------------------
 
@@ -49,6 +58,20 @@ CREATE TABLE `booking_seats` (
   `booking_id` int(11) NOT NULL,
   `seat_number` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `booking_seats`
+--
+
+INSERT INTO `booking_seats` (`id`, `booking_id`, `seat_number`) VALUES
+(4, 4, 'F5'),
+(5, 5, 'A1'),
+(6, 5, 'B1'),
+(7, 5, 'B2'),
+(8, 6, 'A1'),
+(9, 6, 'A2'),
+(10, 7, 'A1'),
+(11, 7, 'A2');
 
 -- --------------------------------------------------------
 
@@ -112,7 +135,10 @@ INSERT INTO `showtime` (`showtime_id`, `movie_id`, `show_date`, `show_time`) VAL
 (14, 3, '2025-11-14', '11:00:00'),
 (15, 4, '2025-11-13', '09:00:00'),
 (16, 5, '2025-11-14', '11:00:00'),
-(17, 5, '2025-11-14', '19:00:00');
+(17, 5, '2025-11-14', '19:00:00'),
+(19, 1, '2026-02-07', '09:00:00'),
+(20, 2, '2026-02-15', '17:00:00'),
+(21, 2, '2026-02-07', '11:00:00');
 
 -- --------------------------------------------------------
 
@@ -136,7 +162,10 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `mobile_no`, `role`) VALUES
 (2, 'Samyak Dangol', 'samyakoe@gmail.com', '$2y$10$W5pITyc7913qkCwmeLGTme9DA0sRcsfhXiB7K3nryKt1CL4fx7dc2', '9761720570', 1),
 (4, 'Test', 'test@gmail.com', '$2y$10$pZ74pFKCj0mEA2vqHd150eHurYgMMytypXtiy3Lfjgb3IJbu5cARi', '969483', NULL),
-(5, 'User', 'usertry@gmail.com', '$2y$10$G3/zs6nFFOxe9RxjD7w6/eSXen/oj5OqUR7pDl8gtLKmmB1ixaj1C', '9885678735', NULL);
+(5, 'User', 'usertry@gmail.com', '$2y$10$G3/zs6nFFOxe9RxjD7w6/eSXen/oj5OqUR7pDl8gtLKmmB1ixaj1C', '9885678735', NULL),
+(6, 'Rakriti Maharjan', 'rakritimaharjan@gmail.com', '$2y$10$OXfIrmJd9cjnQ6oT08ZNvecRGLMjA15x4ZpCwghiTn66C9.ezjpnm', '9812345670', 1),
+(8, 'ewt23r', 'as@123', '$2y$10$p6aNtkNLl3yP.5Icuakdp.noQ6u/rs3q0l9Tb7Tv8TXDPiUW49ix6', '9876543234', NULL),
+(9, 'Rakriti Maharjan', 'rawrkitty@gmail.com', '$2y$10$u9D8wGEwJZrIjlTPioDdnu5U4thH7rw79HfcqQfbPqPBPaLwQyjTa', '9812345670', NULL);
 
 --
 -- Indexes for dumped tables
@@ -186,31 +215,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `booking_seats`
 --
 ALTER TABLE `booking_seats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `movies`
 --
 ALTER TABLE `movies`
-  MODIFY `movie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `movie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `showtime`
 --
 ALTER TABLE `showtime`
-  MODIFY `showtime_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `showtime_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
