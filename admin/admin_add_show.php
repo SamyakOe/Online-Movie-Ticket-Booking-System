@@ -32,7 +32,7 @@ if (isset($_POST['add_show'])) {
 $movies = get_all_rows($db_server, "SELECT movie_id, title FROM movies") ?>
 
 <form method="POST" enctype="multipart/form-data" class="form">
-    <p>Add Show</p>
+    <p class="form-title">Add Show</p>
     <label for="title">Title</label>
     <select name="movie" id="movie" onchange="displayShowContainer()">
         <option value="" selected hidden>Choose a Movie</option>

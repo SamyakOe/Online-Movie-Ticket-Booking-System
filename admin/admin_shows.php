@@ -46,8 +46,8 @@ include("../auth/checkAdmin.php");
                         <td><?= date("M d, Y", strtotime($row["show_date"])) ?></td>
                         <td><?= date("H:i", strtotime($row["show_time"])) ?></td>
                         <td class="action">
-                            <i class="fa-solid fa-pen-to-square action-edit" onclick="openModel('admin_edit_movie.php?id=<?= $row["showtime_id"] ?>')"></i>
-                            <a href="admin_delete_movie.php?id=<?= $row["showtime_id"] ?>" onclick="return confirm('Are you sure you want to delete this movie?')">
+                            <i class="fa-solid fa-pen-to-square action-edit" onclick="openModel('admin_edit_show.php?id=<?= $row["showtime_id"] ?>')"></i>
+                            <a href="admin_delete_show.php?id=<?= $row["showtime_id"] ?>" onclick="return confirm('Are you sure you want to delete this movie?')">
                                 <i class="fa-solid fa-trash action-delete"></i>
                             </a>
                         </td>

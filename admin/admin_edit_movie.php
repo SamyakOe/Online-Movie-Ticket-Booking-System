@@ -47,7 +47,7 @@ if (isset($_POST['edit_movie'])) {
     }
 }
 ?>
-
+<html>
 <head>
     <link rel="stylesheet" href="../assets/css/style.css" />
     <link
@@ -56,7 +56,7 @@ if (isset($_POST['edit_movie'])) {
 </head>
 
 <form method="POST" enctype="multipart/form-data" class="form">
-    <p>Edit Movie</p>
+    <p class="form-title">Edit Movie</p>
     <label for="title">Title</label>
     <input type="text" name="title" value="<?= $movie["title"] ?>" required>
 
@@ -114,3 +114,4 @@ if (isset($_POST['edit_movie'])) {
 
     <button type="submit" name="edit_movie" class="button add" style="text-align: center;">Edit Movie</button>
 </form>
+</html>

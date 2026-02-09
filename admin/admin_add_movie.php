@@ -39,7 +39,7 @@ if (isset($_POST['add_movie'])) {
 </head>
 
 <form method="POST" enctype="multipart/form-data" class="form">
-    <p>Add a New Movie</p>
+    <p class="form-title">Add a New Movie</p>
     <label for="title">Title</label>
     <input type="text" name="title" required>
 
