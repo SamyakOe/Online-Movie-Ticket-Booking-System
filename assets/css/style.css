@@ -641,7 +641,9 @@ iframe {
   font-size: 1.5rem;
 }
 .form input[type="text"],
+.form input[type="email"],
 .form input[type="number"],
+.form input[type="password"],
 .form input[type="time"],
 .form textarea,
 .form input[type="date"],

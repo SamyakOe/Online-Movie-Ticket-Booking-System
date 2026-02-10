@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2026 at 02:50 AM
+-- Generation Time: Feb 10, 2026 at 04:53 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -45,7 +45,8 @@ INSERT INTO `bookings` (`booking_id`, `user_id`, `movie_id`, `showtime_id`, `tot
 (4, 2, 1, 1, 200.00, '2026-01-15 16:56:12', 'confirmed'),
 (5, 2, 1, 1, 600.00, '2026-01-15 21:37:50', 'confirmed'),
 (6, 2, 1, 19, 400.00, '2026-01-16 07:16:25', 'cancelled'),
-(7, 2, 1, 19, 400.00, '2026-01-16 07:32:01', 'confirmed');
+(7, 2, 1, 19, 400.00, '2026-01-16 07:32:01', 'confirmed'),
+(8, 2, 1, 19, 400.00, '2026-01-19 15:42:43', 'confirmed');
 
 -- --------------------------------------------------------
 
@@ -71,7 +72,9 @@ INSERT INTO `booking_seats` (`id`, `booking_id`, `seat_number`) VALUES
 (8, 6, 'A1'),
 (9, 6, 'A2'),
 (10, 7, 'A1'),
-(11, 7, 'A2');
+(11, 7, 'A2'),
+(12, 8, 'B3'),
+(13, 8, 'B4');
 
 -- --------------------------------------------------------
 
@@ -123,7 +126,7 @@ CREATE TABLE `showtime` (
 
 INSERT INTO `showtime` (`showtime_id`, `movie_id`, `show_date`, `show_time`) VALUES
 (1, 1, '2025-11-08', '09:00:00'),
-(2, 1, '2025-11-09', '14:00:00'),
+(2, 1, '2025-11-09', '15:00:00'),
 (6, 1, '2025-11-08', '13:00:00'),
 (7, 2, '2025-11-10', '09:00:00'),
 (8, 2, '2025-11-10', '13:00:00'),
@@ -215,13 +218,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `booking_seats`
 --
 ALTER TABLE `booking_seats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `movies`

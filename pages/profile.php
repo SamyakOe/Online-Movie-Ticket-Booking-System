@@ -55,7 +55,7 @@ $user = get_one_row($db_server, "SELECT * FROM users WHERE id=?", [$id], 'i');
             <hr>
             <div class="profile-actions">
                 <button class="profile-button" onclick="openModel('../profile/edit_profile.php')"><i class="fa-solid fa-pen-to-square"></i>Edit Profile</button>
-                <button class="profile-button"><i class="fa-solid fa-key"></i>Change Password</button>
+                <button class="profile-button" onclick="openModel('../profile/change_password.php')"><i class="fa-solid fa-key"></i>Change Password</button>
             </div>
         </div>
 

@@ -8,7 +8,7 @@ include("../auth/checkAdmin.php");
 $user_id=$_SESSION["user_id"];
 $movie_count = get_one_row($db_server, "SELECT COUNT(*) AS total_movies FROM movies");
 $users_count = get_one_row($db_server, "SELECT COUNT(*) AS total_users FROM users");
-$bookings_count=get_one_row($db_server, "SELECT COUNT(*) AS total_bookings FROM bookings WHERE user_id=?",[$user_id],"i");
+$bookings_count=get_one_row($db_server, "SELECT COUNT(*) AS total_bookings FROM bookings WHERE status='confirmed'");
 ?>
 <head>
   <meta charset="UTF-8" />
