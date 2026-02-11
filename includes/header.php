@@ -19,7 +19,7 @@
       <li><a href="/moviebooking/pages/mybookings.php" class="menu-links">My Bookings</a></li>
 
     <?php } ?>
-    <?php if (isset($_SESSION["user_name"]) && $_SESSION["user_role"] === 1) { ?>
+    <?php if (isset($_SESSION["user_name"]) && (int)$_SESSION["user_role"] === 1) { ?>
       <li><a href="/moviebooking/admin/admin.php" class="menu-links">Admin Panel</a></li>
     <?php }  ?>
 

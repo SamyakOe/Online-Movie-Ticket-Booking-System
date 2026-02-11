@@ -657,6 +657,7 @@ iframe {
   color: white;
   font-size: 1rem;
 }
+
 .form textarea {
   height: fit-content;
   resize: vertical;

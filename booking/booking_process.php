@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // Insert booking
         $booking_query = "INSERT INTO bookings (user_id, movie_id, showtime_id, total_amount, status) VALUES (?, ?, ?, ?, 'confirmed')";
-        if (execute_query($db_server, $booking_query, [$user_id, $movie_id, $showtime_id, $total_amount], "iiii")) {
+        if (execute_query($db_server, $booking_query, [$user_id, $movie_id, $showtime_id, $total_amount], "iiid")) {
 
             // Insert individual seats
             $booking_id = mysqli_insert_id($db_server);

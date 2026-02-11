@@ -162,7 +162,7 @@ $seat_count = count($seats);
 
                     <!-- Action Buttons -->
                     <div class="inner-details-block flex-row-gap">
-                        <a href="../pages/my_bookings.php" style="flex: 1;">
+                        <a href="../pages/mybookings.php" style="flex: 1;">
                             <button class="button full-width-button">
                                 <span class="material-symbols-outlined">receipt_long</span>
                                 View All Bookings
