@@ -2,6 +2,12 @@
 .material-symbols-outlined {
   color: var(--color4);
 }
+.password-visibility {
+  color: var(--color2);
+}
+.password-visibility:hover{
+  cursor: pointer;
+}
 /* Global CSS */
 :root {
   --header: #242840;
@@ -661,6 +667,8 @@ iframe {
 .form textarea {
   height: fit-content;
   resize: vertical;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
 }
 .form select {
   background-color: var(--color4);

@@ -28,6 +28,7 @@ if (isset($_POST['submit'])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
@@ -46,9 +47,12 @@ if (isset($_POST['submit'])) {
           <i class="fa-solid fa-envelope"></i>
           <input type="email" name="email" placeholder="Email" required />
         </div>
-        <div class="input-field">
+        <div class="input-field password-input">
           <i class="fa-solid fa-key"></i>
-          <input type="password" name="password" placeholder="Password" required />
+          <input type="password" name="password" placeholder="Password" class="password" required />
+          <span class="material-symbols-outlined password-visibility visibilityToggle">
+            visibility
+          </span>
         </div>
 
         <input type="submit" name="submit" value="Login" class="button" />
@@ -68,6 +72,7 @@ if (isset($_POST['submit'])) {
       }, 1000);
     </script>
   <?php } ?>
+  <script src="../assets/js/passwordVisibilityToggle.js"></script>
 </body>
 
 </html>

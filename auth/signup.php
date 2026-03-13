@@ -56,6 +56,8 @@ if (isset($_POST['signup'])) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
   <link rel="stylesheet" href="../assets/css/style.css" />
   <link
     rel="stylesheet"
@@ -85,17 +87,23 @@ if (isset($_POST['signup'])) {
           <input type="number" name="mobile_no" placeholder="Mobile Number" id="mobileNo" required />
         </div>
 
-        <div class="input-field">
+        <div class="input-field password-input">
           <i class="fa-solid fa-key"></i>
-          <input type="password" name="password" placeholder="Password" id="password" required />
+          <input type="password" name="password" placeholder="Password" id="password" class="password" required />
+          <span class="material-symbols-outlined password-visibility visibilityToggle">
+            visibility
+          </span>
         </div>
 
-        <div class="input-field">
+        <div class="input-field password-input">
           <i class="fa-solid fa-key"></i>
           <input
             type="password"
             name="confirm_password"
-            placeholder="Confirm Password" id="confirmPassword" required />
+            placeholder="Confirm Password" id="confirmPassword" class="password" required />
+          <span class="material-symbols-outlined password-visibility visibilityToggle">
+            visibility
+          </span>
         </div>
 
         <input type="submit" name="signup" value="Sign Up" class="button" />
@@ -163,5 +171,6 @@ if (isset($_POST['signup'])) {
     return true;
   }
 </script>
+<script src="../assets/js/passwordVisibilityToggle.js"></script>
 
 </html>
