@@ -2,21 +2,23 @@
 include("../includes/connection.php");
 include("../includes/db_helper.php");
 session_start();
+
 $message = $message_class = "";
+
 if (isset($_POST['submit'])) {
-  $email = trim(mysqli_real_escape_string($db_server, $_POST['email']));
+  $email    = trim(mysqli_real_escape_string($db_server, $_POST['email']));
   $password = trim(mysqli_real_escape_string($db_server, $_POST['password']));
 
   $user = get_one_row($db_server, "SELECT * FROM users WHERE email=?", [$email], "s");
 
   if ($user && password_verify($password, $user['password'])) {
-    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['user_id']   = $user['id'];
     $_SESSION['user_name'] = $user['name'];
     $_SESSION['user_role'] = $user['role'];
-    $message = "Login successful!";
-    $message_class = "success";
+    header("Location: ../index.php");
+    exit;
   } else {
-    $message = "Invalid email or password!";
+    $message       = "Invalid email or password.";
     $message_class = "error";
   }
 }
@@ -29,11 +31,8 @@ if (isset($_POST['submit'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../assets/css/style.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-
-  <title>Online Movie Ticketing System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  <title>Login — MovieBook</title>
 </head>
 
 <body>
@@ -41,7 +40,7 @@ if (isset($_POST['submit'])) {
   <main class="login-container">
     <div class="login-box">
       <p class="head">Login</p>
-      <p class="message <?php echo $message_class ?>"><?php echo $message; ?></p>
+      <p class="message <?= $message_class ?>"><?= $message ?></p>
       <form action="login.php" method="post">
         <div class="input-field">
           <i class="fa-solid fa-envelope"></i>
@@ -50,11 +49,8 @@ if (isset($_POST['submit'])) {
         <div class="input-field password-input">
           <i class="fa-solid fa-key"></i>
           <input type="password" name="password" placeholder="Password" class="password" required />
-          <span class="material-symbols-outlined password-visibility visibilityToggle">
-            visibility
-          </span>
+          <span class="material-symbols-outlined password-visibility visibilityToggle">visibility</span>
         </div>
-
         <input type="submit" name="submit" value="Login" class="button" />
       </form>
       <div class="ask">
@@ -63,15 +59,7 @@ if (isset($_POST['submit'])) {
       </div>
     </div>
   </main>
-
   <?php include("../includes/footer.php"); ?>
-  <?php if ($message_class === "success") { ?>
-    <script>
-      setTimeout(() => {
-        window.location.href = "../index.php";
-      }, 1000);
-    </script>
-  <?php } ?>
   <script src="../assets/js/passwordVisibilityToggle.js"></script>
 </body>
 

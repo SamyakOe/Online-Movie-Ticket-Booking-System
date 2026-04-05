@@ -74,7 +74,7 @@ if (isset($_POST['signup'])) {
       <form action="signup.php" method="post" onsubmit="return validate()">
         <div class="input-field">
           <i class="fa-solid fa-envelope"></i>
-          <input type="email" name="email" placeholder="Email" required />
+          <input type="email" name="email" placeholder="Email" id="email" required />
         </div>
 
         <div class="input-field">
@@ -126,17 +126,23 @@ if (isset($_POST['signup'])) {
 <?php } ?>
 <script>
   function validate() {
+    const email = document.getElementById("email").value;
     const mobileNo = document.getElementById("mobileNo").value;
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
 
+    const emailRegex = /^[a-zA-Z0-9._%+-]*(?=[a-zA-Z])[a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      document.querySelector("#message").classList.add("error");
+      document.getElementById('message').innerText = "Invalid Email address";
+      return false;
+    }
     const mobileNoRegex = /^[9][6-8]\d{8}$/;
     if (!mobileNoRegex.test(mobileNo)) {
       document.querySelector("#message").classList.add("error");
       document.getElementById('message').innerText = "Invalid Mobile Number Format.";
       return false;
     }
-
     if (password !== confirmPassword) {
       document.querySelector("#message").classList.add("error");
       document.getElementById('message').innerText = "Password and Confirm Password do not match.";

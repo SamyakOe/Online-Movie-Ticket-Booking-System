@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     mysqli_begin_transaction($db_server);
 
     try {
+        
         // Insert booking
         $booking_query = "INSERT INTO bookings (user_id, movie_id, showtime_id, total_amount, status) VALUES (?, ?, ?, ?, 'confirmed')";
         if (execute_query($db_server, $booking_query, [$user_id, $movie_id, $showtime_id, $total_amount], "iiid")) {

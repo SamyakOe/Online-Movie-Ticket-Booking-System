@@ -5,85 +5,210 @@ include("../includes/db_helper.php");
 include("../auth/checkAuth.php");
 include("../auth/checkAdmin.php");
 
+$errors = [];
+$success = false;
+
 if (isset($_POST['add_movie'])) {
-    $title = mysqli_real_escape_string($db_server, $_POST['title']);
-    $genres = $_POST["genre"];
-    $genres_string = implode(", ", $genres);
-    $language = mysqli_real_escape_string($db_server, $_POST["language"]);
-    $director = mysqli_real_escape_string($db_server, $_POST["director"]);
-    $cast = mysqli_real_escape_string($db_server, $_POST["cast"]);
-    $duration = mysqli_real_escape_string($db_server, $_POST["duration"]);
-    $release_date = mysqli_real_escape_string($db_server, $_POST['release_date']);
-    $description = mysqli_real_escape_string($db_server, $_POST['description']);
+    $title        = trim($_POST['title']);
+    $genres       = isset($_POST['genre']) ? $_POST['genre'] : [];
+    $language     = trim($_POST['language']);
+    $director     = trim($_POST['director']);
+    $cast         = trim($_POST['cast']);
+    $duration     = trim($_POST['duration']);
+    $release_date = trim($_POST['release_date']);
+    $description  = trim($_POST['description']);
 
-    $poster = $_FILES['poster']['name'];
-    $temp = $_FILES['poster']['tmp_name'];
-    move_uploaded_file($temp, "../assets/image/" . $poster);
+    // Validation
+    if (empty($title))        $errors[] = "Title is required.";
+    if (empty($genres))       $errors[] = "Please select at least one genre.";
+    if (empty($language))     $errors[] = "Language is required.";
+    if (empty($director))     $errors[] = "Director is required.";
+    if (empty($cast))         $errors[] = "Cast is required.";
+    if (empty($duration) || !is_numeric($duration) || $duration <= 0)
+                              $errors[] = "Duration must be a positive number.";
+    if (empty($release_date)) $errors[] = "Release date is required.";
+    if (empty($description))  $errors[] = "Description is required.";
 
-    $query = "INSERT INTO movies (title, genre, language, director, cast, duration, release_date, description, poster)
-              VALUES (?,?,?,?,?,?,?,?,?)";
-    $params = array($title, $genres_string, $language, $director, $cast, $duration, $release_date, $description, $poster);
-    if (execute_query($db_server, $query, $params, "sssssisss")) {
-        echo "<script>alert('Movie added successfully!');</script>";
+    // Poster validation
+    if (empty($_FILES['poster']['name'])) {
+        $errors[] = "Poster image is required.";
     } else {
-        echo "Error: " . mysqli_error($db_server);
+        $allowed_types = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+        $max_size      = 5 * 1024 * 1024; // 5 MB
+        if (!in_array($_FILES['poster']['type'], $allowed_types)) {
+            $errors[] = "Poster must be a JPG, PNG, WEBP, or GIF image.";
+        } elseif ($_FILES['poster']['size'] > $max_size) {
+            $errors[] = "Poster must be smaller than 5 MB.";
+        }
+    }
+
+    if (empty($errors)) {
+        $ext    = pathinfo($_FILES['poster']['name'], PATHINFO_EXTENSION);
+        $poster = uniqid('movie_') . '.' . $ext;
+        move_uploaded_file($_FILES['poster']['tmp_name'], "../assets/image/" . $poster);
+
+        $genres_string = implode(", ", $genres);
+        $query  = "INSERT INTO movies (title, genre, language, director, cast, duration, release_date, description, poster)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $params = [$title, $genres_string, $language, $director, $cast, $duration, $release_date, $description, $poster];
+
+        if (execute_query($db_server, $query, $params, "sssssisss")) {
+            $success = true;
+        } else {
+            $errors[] = "Database error: " . mysqli_error($db_server);
+        }
     }
 }
 ?>
-
 <head>
     <link rel="stylesheet" href="../assets/css/style.css" />
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 </head>
 
-<form method="POST" enctype="multipart/form-data" class="form">
-    <p class="form-title">Add a New Movie</p>
-    <label for="title">Title</label>
-    <input type="text" name="title" required>
+<?php if (!empty($errors)): ?>
+    <div class="form-errors">
+        <?php foreach ($errors as $e): ?>
+            <p class="form-error-item"><i class="fa-solid fa-circle-exclamation"></i> <?= htmlspecialchars($e) ?></p>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
 
-    <label for="genre[]">Select Genre:</label>
+<form method="POST" enctype="multipart/form-data" class="form" id="addMovieForm">
+    <p class="form-title">Add a New Movie</p>
+
+    <label for="title">Title</label>
+    <input type="text" name="title" id="title"
+           value="<?= htmlspecialchars($_POST['title'] ?? '') ?>" required>
+
+    <label>Select Genre <span class="form-required">*</span></label>
     <div class="genre-selection">
-        <div><input type="checkbox" name="genre[]" value="Comedy"> Comedy</div>
-        <div><input type="checkbox" name="genre[]" value="Horror"> Horror</div>
-        <div><input type="checkbox" name="genre[]" value="Adventure"> Adventure</div>
-        <div><input type="checkbox" name="genre[]" value="Drama"> Drama</div>
-        <div><input type="checkbox" name="genre[]" value="Action"> Action</div>
-        <div><input type="checkbox" name="genre[]" value="Romance"> Romance</div>
-        <div><input type="checkbox" name="genre[]" value="Sci-Fi"> Sci-Fi</div>
-        <div><input type="checkbox" name="genre[]" value="Thriller"> Thriller</div>
-        <div><input type="checkbox" name="genre[]" value="Fantasy"> Fantasy</div>
-        <div><input type="checkbox" name="genre[]" value="Mystery"> Mystery</div>
-        <div><input type="checkbox" name="genre[]" value="Documentary"> Documentary</div>
-        <div><input type="checkbox" name="genre[]" value="Animation"> Animation</div>
-        <div><input type="checkbox" name="genre[]" value="Musical"> Musical</div>
-        <div><input type="checkbox" name="genre[]" value="Crime"> Crime</div>
-        <div><input type="checkbox" name="genre[]" value="Historical"> Historical</div>
+        <?php
+        $all_genres      = ["Comedy","Horror","Adventure","Drama","Action","Romance",
+                            "Sci-Fi","Thriller","Fantasy","Mystery","Documentary",
+                            "Animation","Musical","Crime","Historical"];
+        $selected_genres = $_POST['genre'] ?? [];
+        foreach ($all_genres as $g):
+            $checked = in_array($g, $selected_genres) ? 'checked' : '';
+        ?>
+            <div class="genre-item <?= $checked ? 'genre-item-checked' : '' ?>"
+                 onclick="toggleGenre(this)">
+                <input type="checkbox" name="genre[]" value="<?= $g ?>" <?= $checked ?>
+                       style="display:none">
+                <?= $g ?>
+            </div>
+        <?php endforeach; ?>
     </div>
 
     <label for="language">Language</label>
-    <input type="text" name="language" required>
+    <input type="text" name="language" id="language"
+           value="<?= htmlspecialchars($_POST['language'] ?? '') ?>" required>
 
     <label for="director">Director</label>
-    <input type="text" name="director" required>
+    <input type="text" name="director" id="director"
+           value="<?= htmlspecialchars($_POST['director'] ?? '') ?>" required>
 
     <label for="cast">Cast</label>
-    <input type="text" name="cast" required>
+    <input type="text" name="cast" id="cast"
+           value="<?= htmlspecialchars($_POST['cast'] ?? '') ?>" required>
 
-    <label for="duration">Duration (in mins)</label>
-    <input type="number" name="duration" required>
+    <label for="duration">Duration (mins)</label>
+    <input type="number" name="duration" id="duration" min="1"
+           value="<?= htmlspecialchars($_POST['duration'] ?? '') ?>" required>
 
     <label for="description">Description</label>
-    <textarea name="description" required></textarea>
+    <textarea name="description" id="description" required><?= htmlspecialchars($_POST['description'] ?? '') ?></textarea>
 
-    <label for="release_date">Released Date:</label>
-    <input type="date" name="release_date" required>
+    <label for="release_date">Release Date</label>
+    <input type="date" name="release_date" id="release_date"
+           value="<?= htmlspecialchars($_POST['release_date'] ?? '') ?>" required>
 
-    <label for="poster">Poster:</label>
-    <input type="file" name="poster" accept="image/*" required><br>
+    <label for="poster">
+        Poster
+        <span class="form-hint">JPG / PNG / WEBP · max 5 MB</span>
+    </label>
+    <input type="file" name="poster" id="poster" accept="image/*" required>
+    <div class="poster-preview-wrap" id="posterPreview"></div>
 
-    
-
-    <button type="submit" name="add_movie" class="button add" style="text-align: center;">Add Movie</button>
+    <button type="submit" name="add_movie" class="button add form-submit-btn">
+        <i class="fa-solid fa-plus"></i> Add Movie
+    </button>
 </form>
+
+<?php if ($success): ?>
+<script>
+    alert('Movie added successfully!');
+    window.parent.location.reload();
+</script>
+<?php endif; ?>
+
+<style>
+.form-errors {
+    background-color: var(--error);
+    border-radius: 0.5rem;
+    padding: 0.8rem 1rem;
+    margin: 0.5rem 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+.form-error-item {
+    color: white;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.form-error-item i { color: white; font-size: 0.85rem; }
+.form-required { color: var(--color3); }
+.form-hint {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--color4);
+}
+.genre-item {
+    display: flex;
+    font-size: 1rem;
+    width: 100%;
+    align-items: center;
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--color4);
+    box-shadow: inset 1px 1px 3px 0px #000;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: background-color 90ms ease-in-out;
+    color: white;
+    user-select: none;
+}
+.genre-item-checked {
+    background-color: var(--color3) !important;
+    color: white;
+}
+.poster-preview-wrap img {
+    margin-top: 0.5rem;
+    width: 40%;
+    border-radius: 0.5rem;
+}
+.form-submit-btn {
+    text-align: center;
+    margin-top: 0.5rem;
+}
+</style>
+
+<script>
+function toggleGenre(div) {
+    const cb = div.querySelector('input[type="checkbox"]');
+    cb.checked = !cb.checked;
+    div.classList.toggle('genre-item-checked', cb.checked);
+}
+
+document.getElementById('poster').addEventListener('change', function () {
+    const preview = document.getElementById('posterPreview');
+    preview.innerHTML = '';
+    if (this.files && this.files[0]) {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(this.files[0]);
+        preview.appendChild(img);
+    }
+});
+</script>

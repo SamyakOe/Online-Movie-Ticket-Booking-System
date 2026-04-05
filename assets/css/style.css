@@ -5,7 +5,7 @@
 .password-visibility {
   color: var(--color2);
 }
-.password-visibility:hover{
+.password-visibility:hover {
   cursor: pointer;
 }
 /* Global CSS */
@@ -2157,4 +2157,154 @@ iframe {
   .profile-button i {
     font-size: 0.9rem;
   }
+}
+/* ============================================================
+   ADDITIONS — append these to the bottom of assets/css/style.css
+   ============================================================ */
+
+/* ── movie.php: empty / hint states ─────────────────────────────────────── */
+.no-shows-notice {
+  color: var(--color4);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+}
+.no-shows-notice i {
+  color: var(--color4);
+  font-size: 1rem;
+}
+.select-date-hint,
+.select-seat-hint {
+  color: var(--color4);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0;
+}
+.select-date-hint i,
+.select-seat-hint i {
+  color: var(--color4);
+  font-size: 0.85rem;
+}
+.no-showtime-msg {
+  color: var(--color4);
+  font-size: 0.9rem;
+  padding: 0.5rem 0;
+}
+
+/* ── mybookings.php: group labels ────────────────────────────────────────── */
+.bookings-header-block {
+  margin-bottom: 1.5rem;
+}
+.bookings-group-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  margin: 1.5rem 0 0.75rem;
+}
+.bookings-group-label i {
+  color: var(--color3);
+  font-size: 1rem;
+}
+.bookings-group-label-past {
+  color: var(--color4);
+}
+.bookings-group-label-past i {
+  color: var(--color4);
+}
+.bookings-group-count {
+  background-color: var(--color2);
+  color: var(--color4);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 2rem;
+}
+.booking-card-past {
+  opacity: 0.65;
+}
+.bookings-browse-btn {
+  margin-top: 1.5rem;
+}
+.booking-view-btn,
+.booking-cancel-btn {
+  width: 100%;
+}
+.booking-cancel-btn {
+  background-color: var(--error);
+}
+
+/* ── booking_confirm.php ─────────────────────────────────────────────────── */
+.confirm-table {
+  width: 100%;
+  color: white;
+  font-size: 1rem;
+}
+.confirm-table th {
+  font-weight: 600;
+  text-align: left;
+  padding-right: 0.2rem;
+  width: 50%;
+}
+.confirm-table td {
+  padding: 0.3rem 0;
+  color: white;
+}
+.confirm-seats {
+  color: var(--color3);
+}
+.confirm-total-row th {
+  padding-top: 1.5rem;
+  font-size: 1.5rem;
+}
+.confirm-total-amount {
+  color: var(--color3);
+  font-size: 1.5rem;
+}
+.confirm-form {
+  flex: 1;
+}
+.confirm-btn-confirm {
+  width: 100%;
+  background-color: var(--success);
+}
+.confirm-btn-cancel {
+  width: 100%;
+  background-color: var(--error);
+}
+
+/* ── booking_success.php ─────────────────────────────────────────────────── */
+.success-action-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.success-action-link {
+  flex: 1;
+}
+.success-btn-primary {
+  width: 100%;
+}
+.success-btn-home {
+  width: 100%;
+  background-color: var(--color4);
+}
+.info-block-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.info-block-title i {
+  color: var(--color1);
+  font-size: 1rem;
+}
+.info-block-list {
+  margin-left: 1.5rem;
+  line-height: 1.6;
+  color: var(--color1);
 }
