@@ -13,9 +13,9 @@ include("../auth/checkAdmin.php");
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../assets/css/style.css" />
   <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
   <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <title>Online Movie Ticketing System</title>
 </head>
 
@@ -39,6 +39,11 @@ include("../auth/checkAdmin.php");
             <span class="material-symbols-outlined">confirmation_number</span>Bookings
           </a>
         </li>
+        <li>
+          <a href="admin_users.php" target="adminContent">
+            <span class="material-symbols-outlined">group</span>Users
+          </a>
+        </li>
       </ul>
     </div>
     <main class="admin_main">
@@ -46,4 +51,5 @@ include("../auth/checkAdmin.php");
     </main>
   </div>
 </body>
+
 </html>
