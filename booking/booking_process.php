@@ -4,6 +4,12 @@ include("../includes/connection.php");
 include("../includes/db_helper.php");
 include("../auth/checkAuth.php");
 
+// Admins are not allowed to book movies
+if ((int)$_SESSION['user_role'] === 1) {
+    header("Location: ../admin/admin.php");
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: ../index.php");
     exit;

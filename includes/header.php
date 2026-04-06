@@ -15,10 +15,10 @@
 
     <li><a href="/moviebooking/pages/profile.php" class="menu-links">My Profile</a></li>
 
-    <?php if (isset($_SESSION["user_name"])) { ?>
+    <?php if (isset($_SESSION["user_name"]) && (int)$_SESSION["user_role"] !== 1) { ?>
       <li><a href="/moviebooking/pages/mybookings.php" class="menu-links">My Bookings</a></li>
-
     <?php } ?>
+
     <?php if (isset($_SESSION["user_name"]) && (int)$_SESSION["user_role"] === 1) { ?>
       <li><a href="/moviebooking/admin/admin.php" class="menu-links">Admin Panel</a></li>
     <?php }  ?>
